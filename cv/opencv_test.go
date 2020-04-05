@@ -11,8 +11,8 @@ func TestVersion(t *testing.T) {
 
 func TestDisplayPicture(t *testing.T) {
 	img := NewMat()
-	CvImread("../data/lena.jpg", 1, img)
-	w := NewWindow("Hello", 1)
+	CvImread("../data/lena.jpg", IMREAD_GRAYSCALE, img)
+	w := NewWindow("Hello", WINDOW_AUTOSIZE)
 	w.Show(img)
 	w.WaitKey(0)
 }
