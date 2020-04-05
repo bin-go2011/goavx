@@ -15,6 +15,7 @@ func TestDisplayPicture(t *testing.T) {
 	w := NewWindow("Hello", WINDOW_AUTOSIZE)
 	w.Show(img)
 	w.WaitKey(0)
+	w.Destory()
 }
 
 func TestOpenVideoDevice(t *testing.T) {

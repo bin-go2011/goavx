@@ -18,3 +18,7 @@ func (w *Window) WaitKey(delay int) {
 func (w *Window) Show(img Mat) {
 	CvImshow(w.name, img)
 }
+
+func (w *Window) Destory() {
+	CvDestroyWindow(w.name)
+}
