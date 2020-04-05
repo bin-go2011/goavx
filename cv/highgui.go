@@ -16,3 +16,7 @@ func NewWindow(name string, flags int) *Window {
 func (w *Window) WaitKey(delay int) {
 	CvWaitKey(delay)
 }
+
+func (w *Window) Show(mat Mat) {
+	CvImshow(w.name, mat)
+}

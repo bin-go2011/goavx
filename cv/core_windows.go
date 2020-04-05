@@ -8,7 +8,8 @@ import (
 )
 
 var (
-	cvVersionProc *windows.Proc
+	cvVersionProc,
+	cvNewMatProc *windows.Proc
 )
 
 func CvVersion() string {
@@ -22,4 +23,16 @@ func CvVersion() string {
 	minor := version >> 8 & 0xff
 	major := version >> 16 & 0xff
 	return fmt.Sprintf("%d.%d.%d", major, minor, subminor)
+}
+
+func CvNewMat() Mat {
+	if cvNewMatProc == nil {
+		cvNewMatProc = goavx.LoadedDLL.MustFindProc("cv_new_mat")
+	}
+
+	r1, _, _ := cvNewMatProc.Call()
+
+	return Mat{
+		handle: r1,
+	}
 }
