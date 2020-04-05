@@ -1,11 +1,12 @@
 package cv
 
 import (
+	"fmt"
 	"testing"
 )
 
 func TestVersion(t *testing.T) {
-	CvVersion()
+	fmt.Println(CvVersion())
 }
 
 // func TestNewWindow(t *testing.T) {
