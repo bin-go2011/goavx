@@ -1,6 +1,7 @@
 package av
 
 import (
+	"fmt"
 	"reflect"
 	"unsafe"
 
@@ -15,7 +16,8 @@ type AVCodecContext struct {
 var (
 	avcodecOpenContextProc,
 	avcodecFreeContextProc,
-	avcodecDecodeAudio4Proc *windows.Proc
+	avcodecDecodeAudio4Proc,
+	avcodecVersionProc *windows.Proc
 )
 
 func AvcodecOpenContext(fmtctx *AVFormatContext, id int32) (*AVCodecContext, error) {
@@ -72,4 +74,18 @@ func AvcodecDecodeAudio4(avctx *AVCodecContext, frame *AVFrame, got_frame_ptr *i
 	sliceHeader.Data = uintptr(*(*uintptr)(unsafe.Pointer(*(*uintptr)(unsafe.Pointer(frame.handle + unsafe.Offsetof(frame.extended_data))))))
 
 	return nil
+}
+
+func AvcodecVersion() string {
+	if avcodecVersionProc == nil {
+		avcodecVersionProc = goavx.LoadedDLL.MustFindProc("_av_codec_version")
+	}
+
+	r1, _, _ := avcodecVersionProc.Call()
+
+	version := int32(r1)
+	subminor := version & 0xff
+	minor := version >> 8 & 0xff
+	major := version >> 16 & 0xff
+	return fmt.Sprintf("%d.%d.%d", major, minor, subminor)
 }

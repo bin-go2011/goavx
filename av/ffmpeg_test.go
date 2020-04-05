@@ -1,6 +1,7 @@
 package av
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -29,4 +30,9 @@ func TestAvFindBestVideoStream(t *testing.T) {
 	if i != 1 {
 		t.Errorf("wrong video index %d, expected %d", i, 1)
 	}
+}
+
+func TestVersion(t *testing.T) {
+	fmt.Println("libavformat: " + AvformatVersion())
+	fmt.Println("libavcodec: " + AvcodecVersion())
 }

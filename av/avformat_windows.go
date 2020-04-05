@@ -1,6 +1,7 @@
 package av
 
 import (
+	"fmt"
 	"reflect"
 	"syscall"
 	"unsafe"
@@ -19,7 +20,8 @@ var (
 	avDumpFormatProc,
 	avFindBestAudioStreamProc,
 	avFindBestVideoStreamProc,
-	avReadFrameProc *windows.Proc
+	avReadFrameProc,
+	avformatVersionProc *windows.Proc
 )
 
 func AvformatOpenInput(file string) (*AVFormatContext, error) {
@@ -88,4 +90,18 @@ func AvReadFrame(fmtctx *AVFormatContext, pkt *AVPacket) int32 {
 	sliceHeader.Data = uintptr(*(*uintptr)(unsafe.Pointer(pkt.data)))
 
 	return int32(r1)
+}
+
+func AvformatVersion() string {
+	if avformatVersionProc == nil {
+		avformatVersionProc = goavx.LoadedDLL.MustFindProc("_av_format_version")
+	}
+
+	r1, _, _ := avformatVersionProc.Call()
+
+	version := int32(r1)
+	subminor := version & 0xff
+	minor := version >> 8 & 0xff
+	major := version >> 16 & 0xff
+	return fmt.Sprintf("%d.%d.%d", major, minor, subminor)
 }
