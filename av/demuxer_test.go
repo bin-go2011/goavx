@@ -1,11 +1,12 @@
 package av
 
 import (
+	"fmt"
 	"testing"
 )
 
 func TestAudioDecoding(t *testing.T) {
-	demuxer, _ := NewDemuxer("big_buck_bunny.mp4")
+	demuxer, _ := NewDemuxer(SAMPLE_FILE)
 	defer demuxer.Release()
 
 	adec, err := demuxer.OpenAudioDecoder()
@@ -26,6 +27,24 @@ func TestAudioDecoding(t *testing.T) {
 		err := adec.Decode(frame, &got_frame, pkt)
 		if err != nil {
 			t.Error(err)
+		}
+	}
+}
+
+func TestVideoDecoding(t *testing.T) {
+	demuxer, _ := NewDemuxer(SAMPLE_FILE)
+	defer demuxer.Release()
+
+	demuxer.FindBestVideoStream()
+
+	pkt, _ := NewAVPacket()
+	defer pkt.Release()
+
+	for {
+		demuxer.ReadFrame(pkt)
+		if pkt.stream_index == demuxer.VideoStreamIndex {
+			fmt.Printf("%#v\n", pkt.CAVPacket)
+
 		}
 	}
 }
