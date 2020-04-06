@@ -61,13 +61,13 @@ func AvDumpFormat(fmtctx *AVFormatContext, file string) {
 	avDumpFormatProc.Call(fmtctx.handle, uintptr(unsafe.Pointer(f)))
 }
 
-func AvFindBestStream(fmtctx *AVFormatContext, mediaType int) int32 {
+func AvFindBestStream(fmtctx *AVFormatContext, mediaType int) (int32, error) {
 	if avFindBestAudioStreamProc == nil {
 		avFindBestAudioStreamProc = goavx.LoadedDLL.MustFindProc("_av_find_best_stream")
 	}
 
-	r1, _, _ := avFindBestAudioStreamProc.Call(fmtctx.handle, uintptr(mediaType))
-	return int32(r1)
+	r1, _, err := avFindBestAudioStreamProc.Call(fmtctx.handle, uintptr(mediaType))
+	return int32(r1), err
 }
 
 func AvReadFrame(fmtctx *AVFormatContext, pkt *AVPacket) int32 {

@@ -25,12 +25,16 @@ func (dmx *Demuxer) Release() {
 	AvformatCloseInput(dmx.fmtctx)
 }
 
-func (dmx *Demuxer) FindBestAudioStream() int32 {
-	return AvFindBestStream(dmx.fmtctx, 1)
+func (dmx *Demuxer) FindBestAudioStream() (id int32, err error) {
+	id, err = AvFindBestStream(dmx.fmtctx, AVMEDIA_TYPE_AUDIO)
+	dmx.AudioStreamIndex = id
+	return
 }
 
-func (dmx *Demuxer) FindBestVideoStream() int32 {
-	return AvFindBestStream(dmx.fmtctx, 0)
+func (dmx *Demuxer) FindBestVideoStream() (id int32, err error) {
+	id, err = AvFindBestStream(dmx.fmtctx, AVMEDIA_TYPE_VIDEO)
+	dmx.VideoStreamIndex = id
+	return
 }
 
 func (dmx *Demuxer) DumpFormat() {
@@ -42,14 +46,15 @@ func (dmx *Demuxer) ReadFrame(pkt *AVPacket) int32 {
 }
 
 func (dmx *Demuxer) OpenAudioDecoder() (*AudioDecoder, error) {
-	audioStreamIndex := dmx.FindBestAudioStream()
-
-	avctx, err := AvcodecOpenContext(dmx.fmtctx, audioStreamIndex)
-	if err != nil {
+	streamIndex, err := dmx.FindBestAudioStream()
+	if streamIndex < 0 {
 		return nil, err
 	}
 
-	dmx.AudioStreamIndex = audioStreamIndex
+	avctx, err := AvcodecOpenContext(dmx.fmtctx, streamIndex)
+	if err != nil {
+		return nil, err
+	}
 
 	dec := &AudioDecoder{
 		avctx,
