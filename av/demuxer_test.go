@@ -1,7 +1,6 @@
 package av
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -23,7 +22,7 @@ func TestAudioDecoding(t *testing.T) {
 	defer frame.Release()
 
 	demuxer.ReadFrame(pkt)
-	if pkt.stream_index == demuxer.AudioStreamIndex {
+	if pkt.StreamIndex() == demuxer.AudioStreamIndex {
 		err := adec.Decode(frame, &got_frame, pkt)
 		if err != nil {
 			t.Error(err)
@@ -42,8 +41,7 @@ func TestVideoDecoding(t *testing.T) {
 
 	for {
 		demuxer.ReadFrame(pkt)
-		if pkt.stream_index == demuxer.VideoStreamIndex {
-			fmt.Printf("%#v\n", pkt.CAVPacket)
+		if pkt.StreamIndex() == demuxer.VideoStreamIndex {
 
 		}
 	}
