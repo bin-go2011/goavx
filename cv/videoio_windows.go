@@ -1,9 +1,6 @@
 package cv
 
 import (
-	"fmt"
-
-	"github.com/bin-go2011/goavx"
 	"golang.org/x/sys/windows"
 )
 
@@ -16,30 +13,30 @@ var (
 	cvVideoCaptureOpenDeviceProc *windows.Proc
 )
 
-func CvNewVideoCapture() (*VideoCapture, error) {
-	if cvNewVideoCaptureProc == nil {
-		cvNewVideoCaptureProc = goavx.LoadedDLL.MustFindProc("cv_new_videocapture")
-	}
+// func CvNewVideoCapture() (*VideoCapture, error) {
+// 	if cvNewVideoCaptureProc == nil {
+// 		cvNewVideoCaptureProc = goavx.LoadedDLL.MustFindProc("cv_new_videocapture")
+// 	}
 
-	r1, _, err := cvNewVideoCaptureProc.Call()
+// 	r1, _, err := cvNewVideoCaptureProc.Call()
 
-	if r1 == 0 {
-		return nil, err
-	}
+// 	if r1 == 0 {
+// 		return nil, err
+// 	}
 
-	cap := &VideoCapture{
-		handle: r1,
-	}
+// 	cap := &VideoCapture{
+// 		handle: r1,
+// 	}
 
-	return cap, nil
-}
+// 	return cap, nil
+// }
 
-func CvVideoCaptureOpenDevice(vc *VideoCapture, device int) {
-	if cvVideoCaptureOpenDeviceProc == nil {
-		cvVideoCaptureOpenDeviceProc = goavx.LoadedDLL.MustFindProc("cv_videocapture_opendevice")
-	}
+// func CvVideoCaptureOpenDevice(vc *VideoCapture, device int) {
+// 	if cvVideoCaptureOpenDeviceProc == nil {
+// 		cvVideoCaptureOpenDeviceProc = goavx.LoadedDLL.MustFindProc("cv_videocapture_opendevice")
+// 	}
 
-	r1, _, _ := cvVideoCaptureOpenDeviceProc.Call(uintptr(vc.handle), uintptr(device))
+// 	r1, _, _ := cvVideoCaptureOpenDeviceProc.Call(uintptr(vc.handle), uintptr(device))
 
-	fmt.Println(r1)
-}
+// 	fmt.Println(r1)
+// }

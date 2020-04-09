@@ -7,6 +7,10 @@ import (
 	"golang.org/x/sys/windows"
 )
 
+type Mat struct {
+	handle uintptr
+}
+
 var (
 	cvVersionProc,
 	cvNewMatProc *windows.Proc
