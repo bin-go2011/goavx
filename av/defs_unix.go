@@ -2,6 +2,6 @@ package av
 
 /*
 #cgo pkg-config: libavformat
-#cgo LDFLAGS: -lgoavx -lc
+#cgo LDFLAGS: -lgoavx
 */
 import "C"
