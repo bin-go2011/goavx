@@ -17,7 +17,7 @@ var (
 
 func CvNamedWindow(name string, flags int) {
 	if cvNamedWindowPro == nil {
-		cvNamedWindowPro = goavx.LoadedDLL.MustFindProc("cv_named_window")
+		cvNamedWindowPro = goavx.LoadedDLL.MustFindProc("_cv_named_window")
 	}
 
 	winname, _ := syscall.BytePtrFromString(name)
@@ -27,7 +27,7 @@ func CvNamedWindow(name string, flags int) {
 
 func CvWaitKey(delay int) {
 	if cvWaitKeyProc == nil {
-		cvWaitKeyProc = goavx.LoadedDLL.MustFindProc("cv_wait_key")
+		cvWaitKeyProc = goavx.LoadedDLL.MustFindProc("_cv_wait_key")
 	}
 
 	cvWaitKeyProc.Call(uintptr(delay))
@@ -36,7 +36,7 @@ func CvWaitKey(delay int) {
 
 func CvImshow(name string, img Mat) {
 	if cvImshowProc == nil {
-		cvImshowProc = goavx.LoadedDLL.MustFindProc("cv_imshow")
+		cvImshowProc = goavx.LoadedDLL.MustFindProc("_cv_imshow")
 	}
 
 	winname, _ := syscall.BytePtrFromString(name)
@@ -46,7 +46,7 @@ func CvImshow(name string, img Mat) {
 
 func CvDestroyWindow(name string) {
 	if cvDestroyWindowProc == nil {
-		cvDestroyWindowProc = goavx.LoadedDLL.MustFindProc("cv_destroy_window")
+		cvDestroyWindowProc = goavx.LoadedDLL.MustFindProc("_cv_destroy_window")
 	}
 
 	winname, _ := syscall.BytePtrFromString(name)

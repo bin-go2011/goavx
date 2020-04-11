@@ -18,7 +18,7 @@ var (
 
 func CvVersion() string {
 	if cvVersionProc == nil {
-		cvVersionProc = goavx.LoadedDLL.MustFindProc("cv_version")
+		cvVersionProc = goavx.LoadedDLL.MustFindProc("_cv_version")
 	}
 	r1, _, _ := cvVersionProc.Call()
 
@@ -31,7 +31,7 @@ func CvVersion() string {
 
 func CvNewMat() Mat {
 	if cvNewMatProc == nil {
-		cvNewMatProc = goavx.LoadedDLL.MustFindProc("cv_new_mat")
+		cvNewMatProc = goavx.LoadedDLL.MustFindProc("_cv_new_mat")
 	}
 
 	r1, _, _ := cvNewMatProc.Call()

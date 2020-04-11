@@ -13,7 +13,7 @@ type (
 )
 
 func CvVersion() string {
-	version := C.cv_version()
+	version := C._cv_version()
 	subminor := version & 0xff
 	minor := version >> 8 & 0xff
 	major := version >> 16 & 0xff
@@ -21,5 +21,5 @@ func CvVersion() string {
 }
 
 func CvNewMat() Mat {
-	return Mat(C.cv_new_mat())
+	return Mat(C._cv_new_mat())
 }

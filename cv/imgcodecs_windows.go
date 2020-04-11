@@ -22,7 +22,7 @@ var (
 
 func CvImread(file string, flags int, mat Mat) {
 	if cvImreadProc == nil {
-		cvImreadProc = goavx.LoadedDLL.MustFindProc("cv_imread")
+		cvImreadProc = goavx.LoadedDLL.MustFindProc("_cv_imread")
 	}
 
 	f, _ := syscall.BytePtrFromString(file)

@@ -14,5 +14,5 @@ const (
 )
 
 func CvImread(file string, flags int, mat Mat) {
-	C.cv_imread(C.CString(file), (C.int)(flags), (C.MatPtr)(mat))
+	C._cv_imread(C.CString(file), (C.int)(flags), (C.MatPtr)(mat))
 }
