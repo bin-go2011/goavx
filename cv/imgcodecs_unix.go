@@ -4,6 +4,7 @@ package cv
 #include "goavx/cv/imgcodecs.h"
 */
 import "C"
+import "fmt"
 
 const (
 	IMREAD_UNCHANGED = -1 //!< If set, return the loaded image as is (with alpha channel, otherwise it gets cropped).
@@ -13,6 +14,11 @@ const (
 	IMREAD_ANYCOLOR  = 4  //!< If set, the image is read in any possible color format.
 )
 
-func CvImread(file string, flags int, mat Mat) {
-	C._cv_imread(C.CString(file), (C.int)(flags), (C.MatPtr)(mat))
+func CvImread(file string, flags int, mat Mat) error {
+	ret := C._cv_imread(C.CString(file), (C.int)(flags), (C.MatPtr)(mat))
+	if int32(ret) < 0 {
+		err := fmt.Errorf("failed to read %s", file)
+		return err
+	}
+	return nil
 }
