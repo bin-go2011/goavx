@@ -1,13 +1,23 @@
 package cv
 
-// func VideoCaptureDevice(device int) (*VideoCapture, error) {
-// 	vc, err := CvNewVideoCapture()
+func OpenVideoCapture(device int) (*VideoCapture, error) {
+	cap, err := CvNewVideoCapture()
+	if err != nil {
+		return nil, err
+	}
 
-// 	if err != nil {
-// 		return nil, err
-// 	}
+	err = CvVideoCaptureOpenDevice(cap, device)
+	if err != nil {
+		return nil, err
+	}
 
-// 	CvVideoCaptureOpenDevice(vc, device)
+	return cap, nil
+}
 
-// 	return vc, nil
-// }
+func (cap *VideoCapture) Release() {
+	CvReleaseVideoCapture(cap)
+}
+
+func (cap *VideoCapture) Read(mat Mat) error {
+	return CvVideoCaptureRead(cap, mat)
+}

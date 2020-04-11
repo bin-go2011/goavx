@@ -15,12 +15,29 @@ func TestDisplayPicture(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	w := NewWindow("Hello", WINDOW_AUTOSIZE)
+	w := NewWindow("pic", WINDOW_AUTOSIZE)
 	w.Show(img)
 	w.WaitKey(0)
 	w.Destory()
 }
 
-func TestOpenVideoDevice(t *testing.T) {
-	// VideoCaptureDevice(1)
+func TestPlayVideo(t *testing.T) {
+	w := NewWindow("video", WINDOW_AUTOSIZE)
+	cap, err := OpenVideoCapture(0)
+	if err != nil {
+		panic(err)
+	}
+	defer cap.Release()
+
+	img := NewMat()
+	for {
+		err := cap.Read(img)
+		if err != nil {
+			panic(err)
+		}
+		w.Show(img)
+		w.WaitKey(33)
+	}
+	w.Destory()
+
 }
