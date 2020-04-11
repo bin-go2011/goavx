@@ -10,13 +10,13 @@ func TestVersion(t *testing.T) {
 }
 
 func TestDisplayPicture(t *testing.T) {
-	img := NewMat()
-	err := CvImread("../data/lena.jpg", IMREAD_GRAYSCALE, img)
+	mat := NewMat()
+	err := CvImread("../data/lena.jpg", IMREAD_GRAYSCALE, mat)
 	if err != nil {
 		panic(err)
 	}
 	w := NewWindow("pic", WINDOW_AUTOSIZE)
-	w.Show(img)
+	w.ShowImage(mat)
 	w.WaitKey(0)
 	w.Destory()
 }
@@ -29,13 +29,13 @@ func TestPlayVideo(t *testing.T) {
 	}
 	defer cap.Release()
 
-	img := NewMat()
+	mat := NewMat()
 	for {
-		err := cap.Read(img)
+		err := cap.Read(mat)
 		if err != nil {
 			panic(err)
 		}
-		w.Show(img)
+		w.ShowImage(mat)
 		w.WaitKey(33)
 	}
 	w.Destory()
