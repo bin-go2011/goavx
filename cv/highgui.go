@@ -17,8 +17,8 @@ func NewWindow(name string, flags int) *Window {
 	}
 }
 
-func (w *Window) WaitKey(delay int) {
-	CvWaitKey(delay)
+func (w *Window) WaitKey(delay int) int8 {
+	return CvWaitKey(delay)
 }
 
 func (w *Window) ShowImage(mat Mat) {

@@ -9,8 +9,8 @@ func CvNamedWindow(name string, flags int) {
 	C._cv_named_window(C.CString(name), (C.int)(flags))
 }
 
-func CvWaitKey(delay int) {
-	C._cv_wait_key((C.int)(delay))
+func CvWaitKey(delay int) int8 {
+	return int8(C._cv_wait_key((C.int)(delay)))
 }
 
 func CvImshow(name string, img Mat) {

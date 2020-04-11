@@ -36,7 +36,9 @@ func TestPlayVideo(t *testing.T) {
 			panic(err)
 		}
 		w.ShowImage(mat)
-		w.WaitKey(33)
+		if key := w.WaitKey(33); key >= 0 {
+			break
+		}
 	}
 	w.Destory()
 
