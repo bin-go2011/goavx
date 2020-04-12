@@ -21,7 +21,7 @@ func (w *Window) WaitKey(delay int) int8 {
 	return CvWaitKey(delay)
 }
 
-func (w *Window) ShowImage(mat Mat) {
+func (w *Window) ShowImage(mat *Mat) {
 	CvImshow(w.name, mat)
 }
 

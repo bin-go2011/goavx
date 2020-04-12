@@ -13,8 +13,8 @@ func CvWaitKey(delay int) int8 {
 	return int8(C._cv_wait_key((C.int)(delay)))
 }
 
-func CvImshow(name string, img Mat) {
-	C._cv_imshow(C.CString(name), (C.MatPtr)(img))
+func CvImshow(name string, img *Mat) {
+	C._cv_imshow(C.CString(name), (C.MatPtr)(img.handle))
 }
 
 func CvDestroyWindow(name string) {

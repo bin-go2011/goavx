@@ -18,6 +18,6 @@ func (cap *VideoCapture) Release() {
 	CvReleaseVideoCapture(cap)
 }
 
-func (cap *VideoCapture) Read(mat Mat) error {
+func (cap *VideoCapture) Read(mat *Mat) error {
 	return CvVideoCaptureRead(cap, mat)
 }

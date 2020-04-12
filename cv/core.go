@@ -1,5 +1,9 @@
 package cv
 
-func NewMat() Mat {
+func NewMat() (*Mat, error) {
 	return CvNewMat()
+}
+
+func (m *Mat) Release() {
+
 }

@@ -14,8 +14,8 @@ const (
 	IMREAD_ANYCOLOR  = 4  //!< If set, the image is read in any possible color format.
 )
 
-func CvImread(file string, flags int, mat Mat) error {
-	ret := C._cv_imread(C.CString(file), (C.int)(flags), (C.MatPtr)(mat))
+func CvImread(file string, flags int, mat *Mat) error {
+	ret := C._cv_imread(C.CString(file), (C.int)(flags), (C.MatPtr)(mat.handle))
 	if int32(ret) < 0 {
 		err := fmt.Errorf("failed to read %s", file)
 		return err
