@@ -5,6 +5,8 @@ import (
 	"testing"
 )
 
+const SAMPLE_FILE = "../data/big_buck_bunny.mp4"
+
 func TestVersion(t *testing.T) {
 	fmt.Println(CvVersion())
 }
@@ -53,4 +55,21 @@ func TestMovingAround(t *testing.T) {
 	w := NewWindow("Example 2-4", WINDOW_AUTOSIZE)
 	defer w.Destory()
 
+	cap, err := OpenVideoFile(SAMPLE_FILE)
+	if err != nil {
+		panic(err)
+	}
+	defer cap.Release()
+
+	mat, _ := NewMat()
+	defer mat.Release()
+
+	for {
+		err := cap.Read(mat)
+		if err != nil {
+			break
+		}
+		w.ShowImage(mat)
+		w.WaitKey(33)
+	}
 }

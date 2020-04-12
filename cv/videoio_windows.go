@@ -15,7 +15,7 @@ var (
 
 // func CvNewVideoCapture() (*VideoCapture, error) {
 // 	if cvNewVideoCaptureProc == nil {
-// 		cvNewVideoCaptureProc = goavx.LoadedDLL.MustFindProc("cv_new_videocapture")
+// 		cvNewVideoCaptureProc = goavx.LoadedDLL.MustFindProc("_cv_new_videocapture")
 // 	}
 
 // 	r1, _, err := cvNewVideoCaptureProc.Call()
@@ -33,7 +33,7 @@ var (
 
 // func CvVideoCaptureOpenDevice(vc *VideoCapture, device int) {
 // 	if cvVideoCaptureOpenDeviceProc == nil {
-// 		cvVideoCaptureOpenDeviceProc = goavx.LoadedDLL.MustFindProc("cv_videocapture_opendevice")
+// 		cvVideoCaptureOpenDeviceProc = goavx.LoadedDLL.MustFindProc("_cv_videocapture_open_device")
 // 	}
 
 // 	r1, _, _ := cvVideoCaptureOpenDeviceProc.Call(uintptr(vc.handle), uintptr(device))

@@ -22,7 +22,7 @@ func CvNewVideoCapture() (*VideoCapture, error) {
 }
 
 func CvVideoCaptureOpenDevice(cap *VideoCapture, device int) error {
-	ret := C._cv_videocapture_opendevice((C.VideoCapturePtr)(cap.handle), (C.int)(device))
+	ret := C._cv_videocapture_open_device((C.VideoCapturePtr)(cap.handle), (C.int)(device))
 	if int(ret) < 0 {
 		err := fmt.Errorf("failed to open video capture device %d", device)
 		return err
@@ -37,8 +37,18 @@ func CvReleaseVideoCapture(cap *VideoCapture) {
 
 func CvVideoCaptureRead(cap *VideoCapture, mat *Mat) error {
 	ret := C._cv_videocapture_read((C.VideoCapturePtr)(cap.handle), (C.MatPtr)(mat.handle))
-	if int(ret) < 0 {
+	if int(ret) == 0 {
 		err := fmt.Errorf("failed to read from video capture device")
+		return err
+	}
+
+	return nil
+}
+
+func CvVideoCaptureOpenFile(cap *VideoCapture, filename string) error {
+	ret := C._cv_videocapture_open_file((C.VideoCapturePtr)(cap.handle), (C.CString)(filename))
+	if int(ret) < 0 {
+		err := fmt.Errorf("failed to open video file %s", filename)
 		return err
 	}
 
