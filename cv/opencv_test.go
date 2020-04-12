@@ -5,7 +5,10 @@ import (
 	"testing"
 )
 
-const SAMPLE_FILE = "../data/big_buck_bunny.mp4"
+const (
+	SAMPLE_VIDEO = "../data/big_buck_bunny.mp4"
+	SAMPLE_FILE  = "../data/lena.jpg"
+)
 
 func TestVersion(t *testing.T) {
 	fmt.Println(CvVersion())
@@ -15,7 +18,7 @@ func TestDisplayPicture(t *testing.T) {
 	mat, _ := NewMat()
 	defer mat.Release()
 
-	err := CvImread("../data/lena.jpg", IMREAD_GRAYSCALE, mat)
+	err := CvImread(SAMPLE_FILE, IMREAD_GRAYSCALE, mat)
 	if err != nil {
 		panic(err)
 	}
@@ -51,7 +54,7 @@ func TestPlayVideo(t *testing.T) {
 	}
 }
 
-func TestMovingAround(t *testing.T) {
+func TestPlayVideoFile(t *testing.T) {
 	w := NewWindow("Example 2-4", WINDOW_AUTOSIZE)
 	defer w.Destory()
 
@@ -72,4 +75,28 @@ func TestMovingAround(t *testing.T) {
 		w.ShowImage(mat)
 		w.WaitKey(33)
 	}
+}
+
+func TestGaussianBlur(t *testing.T) {
+	w_in := NewWindow("Example 2-5-in", WINDOW_AUTOSIZE)
+	defer w_in.Destory()
+
+	w_out := NewWindow("Example 2-5-out", WINDOW_AUTOSIZE)
+	defer w_out.Destory()
+
+	img, _ := NewMat()
+	defer img.Release()
+
+	err := CvImread(SAMPLE_FILE, IMREAD_UNCHANGED, img)
+	if err != nil {
+		panic(err)
+	}
+	w_in.ShowImage(img)
+
+	out := img.GaussianBlur(5, 5, 3, 3)
+	defer out.Release()
+
+	w_out.ShowImage(out)
+
+	w_in.WaitKey(0)
 }
