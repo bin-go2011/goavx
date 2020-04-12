@@ -5,5 +5,5 @@ func NewMat() (*Mat, error) {
 }
 
 func (m *Mat) Release() {
-
+	CvReleaseMat(m)
 }

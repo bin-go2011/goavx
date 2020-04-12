@@ -11,6 +11,8 @@ func TestVersion(t *testing.T) {
 
 func TestDisplayPicture(t *testing.T) {
 	mat, _ := NewMat()
+	defer mat.Release()
+
 	err := CvImread("../data/lena.jpg", IMREAD_GRAYSCALE, mat)
 	if err != nil {
 		panic(err)
@@ -30,6 +32,8 @@ func TestPlayVideo(t *testing.T) {
 	defer cap.Release()
 
 	mat, _ := NewMat()
+	defer mat.Release()
+
 	for {
 		err := cap.Read(mat)
 		if err != nil {

@@ -30,3 +30,7 @@ func CvNewMat() (*Mat, error) {
 		handle: mat,
 	}, nil
 }
+
+func CvReleaseMat(mat *Mat) {
+	C._cv_release_mat((C.MatPtr)(mat.handle))
+}
