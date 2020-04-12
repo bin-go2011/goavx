@@ -1,6 +1,6 @@
 package cv
 
-func OpenVideoCapture(device int) (*VideoCapture, error) {
+func OpenVideoDevice(device int) (*VideoCapture, error) {
 	cap, err := CvNewVideoCapture()
 	if err != nil {
 		return nil, err

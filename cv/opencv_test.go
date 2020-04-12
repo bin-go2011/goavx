@@ -17,15 +17,18 @@ func TestDisplayPicture(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	w := NewWindow("pic", WINDOW_AUTOSIZE)
+	w := NewWindow("Example 2-2", WINDOW_AUTOSIZE)
+	defer w.Destory()
+
 	w.ShowImage(mat)
 	w.WaitKey(0)
-	w.Destory()
 }
 
 func TestPlayVideo(t *testing.T) {
-	w := NewWindow("video", WINDOW_AUTOSIZE)
-	cap, err := OpenVideoCapture(0)
+	w := NewWindow("Example 2-3", WINDOW_AUTOSIZE)
+	defer w.Destory()
+
+	cap, err := OpenVideoDevice(0)
 	if err != nil {
 		panic(err)
 	}
@@ -44,6 +47,10 @@ func TestPlayVideo(t *testing.T) {
 			break
 		}
 	}
-	w.Destory()
+}
+
+func TestMovingAround(t *testing.T) {
+	w := NewWindow("Example 2-4", WINDOW_AUTOSIZE)
+	defer w.Destory()
 
 }
