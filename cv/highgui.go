@@ -11,20 +11,20 @@ const (
 )
 
 func NewWindow(name string, flags int) *Window {
-	CvNamedWindow(name, flags)
+	cvNamedWindow(name, flags)
 	return &Window{
 		name: name,
 	}
 }
 
-func (w *Window) WaitKey(delay int) int8 {
-	return CvWaitKey(delay)
+func WaitKey(delay int) int8 {
+	return cvWaitKey(delay)
 }
 
 func (w *Window) ShowImage(mat *Mat) {
-	CvImshow(w.name, mat)
+	cvImshow(w.name, mat)
 }
 
 func (w *Window) Destory() {
-	CvDestroyWindow(w.name)
+	cvDestroyWindow(w.name)
 }

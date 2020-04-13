@@ -12,7 +12,7 @@ var (
 	cvImreadProc *windows.Proc
 )
 
-func CvImread(file string, flags int, mat *Mat) error {
+func cvImread(file string, flags int, mat *Mat) error {
 	if cvImreadProc == nil {
 		cvImreadProc = goavx.LoadedDLL.MustFindProc("_cv_imread")
 	}

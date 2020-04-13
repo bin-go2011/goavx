@@ -16,14 +16,14 @@ func init() {
 	SAMPLE_FILE, _ = filepath.Abs("../data/lena.jpg")
 }
 func TestVersion(t *testing.T) {
-	fmt.Println(CvVersion())
+	fmt.Println(cvVersion())
 }
 
 func TestDisplayPicture(t *testing.T) {
 	mat, _ := NewMat()
 	defer mat.Release()
 
-	err := CvImread(SAMPLE_FILE, IMREAD_GRAYSCALE, mat)
+	err := cvImread(SAMPLE_FILE, IMREAD_GRAYSCALE, mat)
 	if err != nil {
 		panic(err)
 	}
@@ -31,7 +31,7 @@ func TestDisplayPicture(t *testing.T) {
 	defer w.Destory()
 
 	w.ShowImage(mat)
-	w.WaitKey(0)
+	WaitKey(0)
 }
 
 func TestOpenVideoDevice(t *testing.T) {
@@ -53,7 +53,7 @@ func TestOpenVideoDevice(t *testing.T) {
 			panic(err)
 		}
 		w.ShowImage(mat)
-		if key := w.WaitKey(33); key >= 0 {
+		if key := WaitKey(33); key >= 0 {
 			break
 		}
 	}
@@ -78,7 +78,7 @@ func TestOpenVideoFile(t *testing.T) {
 			break
 		}
 		w.ShowImage(mat)
-		w.WaitKey(33)
+		WaitKey(33)
 	}
 }
 
@@ -92,21 +92,25 @@ func TestGaussianBlur(t *testing.T) {
 	img, _ := NewMat()
 	defer img.Release()
 
-	err := CvImread(SAMPLE_FILE, IMREAD_UNCHANGED, img)
+	err := cvImread(SAMPLE_FILE, IMREAD_UNCHANGED, img)
 	if err != nil {
 		panic(err)
 	}
 	w_in.ShowImage(img)
 
-	out := img.GaussianBlur(5, 5, 3, 3)
+	out, _ := NewMat()
 	defer out.Release()
 
-	out1 := out.GaussianBlur(5, 5, 3, 3)
+	GaussianBlur(img, out, 5, 5, 3, 3)
+
+	out1, _ := NewMat()
 	defer out1.Release()
+
+	GaussianBlur(out, out1, 5, 5, 3, 3)
 
 	w_out.ShowImage(out1)
 
-	w_in.WaitKey(0)
+	WaitKey(0)
 }
 
 func TestPyrDown(t *testing.T) {
@@ -122,14 +126,14 @@ func TestPyrDown(t *testing.T) {
 	img2, _ := NewMat()
 	defer img2.Release()
 
-	err := CvImread(SAMPLE_FILE, IMREAD_UNCHANGED, img1)
+	err := cvImread(SAMPLE_FILE, IMREAD_UNCHANGED, img1)
 	if err != nil {
 		panic(err)
 	}
 	w_in.ShowImage(img1)
 
-	CvPyrDown(img1, img2)
+	cvPyrDown(img1, img2)
 	w_out.ShowImage(img2)
 
-	w_in.WaitKey(0)
+	WaitKey(0)
 }

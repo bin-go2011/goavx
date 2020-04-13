@@ -13,3 +13,11 @@ const (
 	BORDER_ISOLATED   = 16                 //!< do not look outside of ROI
 
 )
+
+func GaussianBlur(src *Mat, dst *Mat, ksizeX int, ksizeY int, sigmaX float64, sigmaY float64) {
+	cvGaussianBlur(src, dst, ksizeX, ksizeY, sigmaX, sigmaY, BORDER_DEFAULT)
+}
+
+func PyrDown(src *Mat, dst *Mat) {
+	cvPyrDown(src, dst)
+}

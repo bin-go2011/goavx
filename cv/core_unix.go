@@ -12,7 +12,7 @@ type Mat struct {
 	handle C.MatPtr
 }
 
-func CvVersion() string {
+func cvVersion() string {
 	version := C._cv_version()
 	subminor := version & 0xff
 	minor := version >> 8 & 0xff
@@ -20,7 +20,7 @@ func CvVersion() string {
 	return fmt.Sprintf("%d.%d.%d", major, minor, subminor)
 }
 
-func CvNewMat() (*Mat, error) {
+func cvNewMat() (*Mat, error) {
 	mat := C._cv_new_mat()
 	if mat == nil {
 		err := fmt.Errorf("failed to new Mat object")
@@ -31,6 +31,6 @@ func CvNewMat() (*Mat, error) {
 	}, nil
 }
 
-func CvReleaseMat(mat *Mat) {
+func cvReleaseMat(mat *Mat) {
 	C._cv_release_mat((C.MatPtr)(mat.handle))
 }

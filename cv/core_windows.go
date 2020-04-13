@@ -17,7 +17,7 @@ var (
 	cvReleaseMatProc *windows.Proc
 )
 
-func CvVersion() string {
+func cvVersion() string {
 	if cvVersionProc == nil {
 		cvVersionProc = goavx.LoadedDLL.MustFindProc("_cv_version")
 	}
@@ -30,7 +30,7 @@ func CvVersion() string {
 	return fmt.Sprintf("%d.%d.%d", major, minor, subminor)
 }
 
-func CvNewMat() (*Mat, error) {
+func cvNewMat() (*Mat, error) {
 	if cvNewMatProc == nil {
 		cvNewMatProc = goavx.LoadedDLL.MustFindProc("_cv_new_mat")
 	}
@@ -47,7 +47,7 @@ func CvNewMat() (*Mat, error) {
 
 }
 
-func CvReleaseMat(mat *Mat) {
+func cvReleaseMat(mat *Mat) {
 	if cvReleaseMatProc == nil {
 		cvReleaseMatProc = goavx.LoadedDLL.MustFindProc("_cv_release_mat")
 	}

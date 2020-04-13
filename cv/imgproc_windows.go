@@ -11,7 +11,7 @@ var (
 	cvGaussianBlurProc *windows.Proc
 )
 
-func CvGaussianBlur(src *Mat, dst *Mat, ksizeX int, ksizeY int, sigmaX float64, sigmaY float64, borderType int) {
+func cvGaussianBlur(src *Mat, dst *Mat, ksizeX int, ksizeY int, sigmaX float64, sigmaY float64, borderType int) {
 	if cvGaussianBlurProc == nil {
 		cvGaussianBlurProc = goavx.LoadedDLL.MustFindProc("_cv_gaussian_blur")
 	}

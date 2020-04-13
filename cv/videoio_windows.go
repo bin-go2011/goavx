@@ -20,7 +20,7 @@ var (
 	cvVideoCaptureOpenFileProc *windows.Proc
 )
 
-func CvNewVideoCapture() (*VideoCapture, error) {
+func cvNewVideoCapture() (*VideoCapture, error) {
 	if cvNewVideoCaptureProc == nil {
 		cvNewVideoCaptureProc = goavx.LoadedDLL.MustFindProc("_cv_new_videocapture")
 	}
@@ -36,7 +36,7 @@ func CvNewVideoCapture() (*VideoCapture, error) {
 	}, nil
 }
 
-func CvVideoCaptureOpenDevice(cap *VideoCapture, device int) error {
+func cvVideoCaptureOpenDevice(cap *VideoCapture, device int) error {
 	if cvVideoCaptureOpenDeviceProc == nil {
 		cvVideoCaptureOpenDeviceProc = goavx.LoadedDLL.MustFindProc("_cv_videocapture_open_device")
 	}
@@ -50,7 +50,7 @@ func CvVideoCaptureOpenDevice(cap *VideoCapture, device int) error {
 	return nil
 }
 
-func CvReleaseVideoCapture(cap *VideoCapture) {
+func cvReleaseVideoCapture(cap *VideoCapture) {
 	if cvReleaseVideoCaptureProc == nil {
 		cvReleaseVideoCaptureProc = goavx.LoadedDLL.MustFindProc("_cv_release_videocapture")
 	}
@@ -58,7 +58,7 @@ func CvReleaseVideoCapture(cap *VideoCapture) {
 	cvReleaseVideoCaptureProc.Call(uintptr(cap.handle))
 }
 
-func CvVideoCaptureRead(cap *VideoCapture, mat *Mat) error {
+func cvVideoCaptureRead(cap *VideoCapture, mat *Mat) error {
 	if cvVideoCaptureReadProc == nil {
 		cvVideoCaptureReadProc = goavx.LoadedDLL.MustFindProc("_cv_videocapture_read")
 	}
@@ -71,7 +71,7 @@ func CvVideoCaptureRead(cap *VideoCapture, mat *Mat) error {
 	return nil
 }
 
-func CvVideoCaptureOpenFile(cap *VideoCapture, filename string) error {
+func cvVideoCaptureOpenFile(cap *VideoCapture, filename string) error {
 	if cvVideoCaptureOpenFileProc == nil {
 		cvVideoCaptureOpenFileProc = goavx.LoadedDLL.MustFindProc("_cv_videocapture_open_file")
 	}

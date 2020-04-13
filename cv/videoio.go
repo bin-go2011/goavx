@@ -1,12 +1,12 @@
 package cv
 
 func OpenVideoDevice(device int) (*VideoCapture, error) {
-	cap, err := CvNewVideoCapture()
+	cap, err := cvNewVideoCapture()
 	if err != nil {
 		return nil, err
 	}
 
-	err = CvVideoCaptureOpenDevice(cap, device)
+	err = cvVideoCaptureOpenDevice(cap, device)
 	if err != nil {
 		return nil, err
 	}
@@ -15,12 +15,12 @@ func OpenVideoDevice(device int) (*VideoCapture, error) {
 }
 
 func OpenVideoFile(file string) (*VideoCapture, error) {
-	cap, err := CvNewVideoCapture()
+	cap, err := cvNewVideoCapture()
 	if err != nil {
 		return nil, err
 	}
 
-	err = CvVideoCaptureOpenFile(cap, file)
+	err = cvVideoCaptureOpenFile(cap, file)
 	if err != nil {
 		return nil, err
 	}
@@ -29,9 +29,9 @@ func OpenVideoFile(file string) (*VideoCapture, error) {
 }
 
 func (cap *VideoCapture) Release() {
-	CvReleaseVideoCapture(cap)
+	cvReleaseVideoCapture(cap)
 }
 
 func (cap *VideoCapture) Read(mat *Mat) error {
-	return CvVideoCaptureRead(cap, mat)
+	return cvVideoCaptureRead(cap, mat)
 }
