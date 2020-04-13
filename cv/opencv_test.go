@@ -137,3 +137,29 @@ func TestPyrDown(t *testing.T) {
 
 	WaitKey(0)
 }
+
+func TestCanny(t *testing.T) {
+	w_in := NewWindow("Example 2-6-2-in", WINDOW_AUTOSIZE)
+	defer w_in.Destory()
+
+	w_out := NewWindow("Example 2-6-2-out", WINDOW_AUTOSIZE)
+	defer w_out.Destory()
+
+	img1, _ := NewMat()
+	defer img1.Release()
+
+	img2, _ := NewMat()
+	defer img2.Release()
+
+	err := cvImread(SAMPLE_FILE, IMREAD_GRAYSCALE, img1)
+	if err != nil {
+		panic(err)
+	}
+	w_in.ShowImage(img1)
+
+	cvCanny(img1, img2, 10, 100, 3, 1)
+	w_out.ShowImage(img2)
+
+	WaitKey(0)
+
+}

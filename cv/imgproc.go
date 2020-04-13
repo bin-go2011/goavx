@@ -21,3 +21,7 @@ func GaussianBlur(src *Mat, dst *Mat, ksizeX int, ksizeY int, sigmaX float64, si
 func PyrDown(src *Mat, dst *Mat) {
 	cvPyrDown(src, dst)
 }
+
+func Canny(img *Mat, edges *Mat, threshold1 float64, threshold2 float64, apertureSize int, L2gradient int) {
+	cvCanny(img, edges, threshold1, threshold2, apertureSize, L2gradient)
+}
