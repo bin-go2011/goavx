@@ -24,7 +24,7 @@ var (
 	avformatVersionProc *windows.Proc
 )
 
-func AvformatOpenInput(file string) (*AVFormatContext, error) {
+func avformatOpenInput(file string) (*AVFormatContext, error) {
 	if avformatOpenInputProc == nil {
 		avformatOpenInputProc = goavx.LoadedDLL.MustFindProc("_av_format_open_input")
 	}
@@ -43,7 +43,7 @@ func AvformatOpenInput(file string) (*AVFormatContext, error) {
 	return fmtctx, nil
 }
 
-func AvformatCloseInput(fmtctx *AVFormatContext) {
+func avformatCloseInput(fmtctx *AVFormatContext) {
 	if avformatCloseInputProc == nil {
 		avformatCloseInputProc = goavx.LoadedDLL.MustFindProc("_av_format_close_input")
 	}
@@ -51,7 +51,7 @@ func AvformatCloseInput(fmtctx *AVFormatContext) {
 	avformatCloseInputProc.Call(fmtctx.handle)
 }
 
-func AvDumpFormat(fmtctx *AVFormatContext, file string) {
+func avDumpFormat(fmtctx *AVFormatContext, file string) {
 	if avDumpFormatProc == nil {
 		avDumpFormatProc = goavx.LoadedDLL.MustFindProc("_av_dump_format")
 	}
@@ -61,7 +61,7 @@ func AvDumpFormat(fmtctx *AVFormatContext, file string) {
 	avDumpFormatProc.Call(fmtctx.handle, uintptr(unsafe.Pointer(f)))
 }
 
-func AvFindBestStream(fmtctx *AVFormatContext, mediaType int) (int32, error) {
+func avFindBestStream(fmtctx *AVFormatContext, mediaType int) (int32, error) {
 	if avFindBestAudioStreamProc == nil {
 		avFindBestAudioStreamProc = goavx.LoadedDLL.MustFindProc("_av_find_best_stream")
 	}
@@ -70,7 +70,7 @@ func AvFindBestStream(fmtctx *AVFormatContext, mediaType int) (int32, error) {
 	return int32(r1), err
 }
 
-func AvReadFrame(fmtctx *AVFormatContext, pkt *AVPacket) int32 {
+func avReadFrame(fmtctx *AVFormatContext, pkt *AVPacket) int32 {
 	if avReadFrameProc == nil {
 		avReadFrameProc = goavx.LoadedDLL.MustFindProc("_av_read_frame")
 	}
@@ -92,7 +92,7 @@ func AvReadFrame(fmtctx *AVFormatContext, pkt *AVPacket) int32 {
 	return int32(r1)
 }
 
-func AvformatVersion() string {
+func avformatVersion() string {
 	if avformatVersionProc == nil {
 		avformatVersionProc = goavx.LoadedDLL.MustFindProc("_av_format_version")
 	}

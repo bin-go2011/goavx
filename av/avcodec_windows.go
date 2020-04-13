@@ -33,7 +33,7 @@ var (
 	avFreePacketProc *windows.Proc
 )
 
-func AvAllocPacket() (*AVPacket, error) {
+func avAllocPacket() (*AVPacket, error) {
 	if avAllocPacketProc == nil {
 		avAllocPacketProc = goavx.LoadedDLL.MustFindProc("_av_packet_alloc")
 	}
@@ -51,7 +51,7 @@ func AvAllocPacket() (*AVPacket, error) {
 	return pkt, nil
 }
 
-func AvFreePacket(pkt *AVPacket) {
+func avFreePacket(pkt *AVPacket) {
 	if avFreePacketProc == nil {
 		avFreePacketProc = goavx.LoadedDLL.MustFindProc("_av_free_packet")
 	}
@@ -70,7 +70,7 @@ var (
 	avcodecVersionProc *windows.Proc
 )
 
-func AvcodecOpenContext(fmtctx *AVFormatContext, id int32) (*AVCodecContext, error) {
+func avcodecOpenContext(fmtctx *AVFormatContext, id int32) (*AVCodecContext, error) {
 	if avcodecOpenContextProc == nil {
 		avcodecOpenContextProc = goavx.LoadedDLL.MustFindProc("_av_codec_open_context")
 	}
@@ -87,7 +87,7 @@ func AvcodecOpenContext(fmtctx *AVFormatContext, id int32) (*AVCodecContext, err
 	return avctx, nil
 }
 
-func AvcodecFreeContext(avctx *AVCodecContext) {
+func avcodecFreeContext(avctx *AVCodecContext) {
 	if avcodecFreeContextProc == nil {
 		avcodecFreeContextProc = goavx.LoadedDLL.MustFindProc("_av_codec_free_context")
 	}
@@ -95,7 +95,7 @@ func AvcodecFreeContext(avctx *AVCodecContext) {
 	avcodecFreeContextProc.Call(avctx.handle)
 }
 
-func AvcodecDecodeAudio4(avctx *AVCodecContext, frame *AVFrame, got_frame_ptr *int, avpkt *AVPacket) error {
+func avcodecDecodeAudio4(avctx *AVCodecContext, frame *AVFrame, got_frame_ptr *int, avpkt *AVPacket) error {
 	if avcodecDecodeAudio4Proc == nil {
 		avcodecDecodeAudio4Proc = goavx.LoadedDLL.MustFindProc("_av_codec_decode_audio4")
 	}
@@ -126,7 +126,7 @@ func AvcodecDecodeAudio4(avctx *AVCodecContext, frame *AVFrame, got_frame_ptr *i
 	return nil
 }
 
-func AvcodecVersion() string {
+func avcodecVersion() string {
 	if avcodecVersionProc == nil {
 		avcodecVersionProc = goavx.LoadedDLL.MustFindProc("_av_codec_version")
 	}

@@ -1,7 +1,7 @@
 package av
 
 func NewAVPacket() (*AVPacket, error) {
-	pkt, err := AvAllocPacket()
+	pkt, err := avAllocPacket()
 	if err != nil {
 		return nil, err
 	}
@@ -9,7 +9,7 @@ func NewAVPacket() (*AVPacket, error) {
 }
 
 func (pkt *AVPacket) Release() {
-	AvFreePacket(pkt)
+	avFreePacket(pkt)
 }
 
 func (pkt *AVPacket) StreamIndex() int32 {
@@ -17,9 +17,9 @@ func (pkt *AVPacket) StreamIndex() int32 {
 }
 
 func (avctx *AVCodecContext) DecodeAudio(frame *AVFrame, got_frame_ptr *int, avpkt *AVPacket) error {
-	return AvcodecDecodeAudio4(avctx, frame, got_frame_ptr, avpkt)
+	return avcodecDecodeAudio4(avctx, frame, got_frame_ptr, avpkt)
 }
 
 func (avctx *AVCodecContext) Close() {
-	AvcodecFreeContext(avctx)
+	avcodecFreeContext(avctx)
 }

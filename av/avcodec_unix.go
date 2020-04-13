@@ -14,7 +14,7 @@ type (
 	AVCodecContext C.struct_AVCodecContext
 )
 
-func AvcodecVersion() string {
+func avcodecVersion() string {
 	version := int32(C._av_codec_version())
 
 	subminor := version & 0xff
@@ -23,7 +23,7 @@ func AvcodecVersion() string {
 	return fmt.Sprintf("%d.%d.%d", major, minor, subminor)
 }
 
-func AvAllocPacket() (*AVPacket, error) {
+func avAllocPacket() (*AVPacket, error) {
 	pkt := C._av_packet_alloc()
 	if pkt == nil {
 		err := fmt.Errorf("packet allocation failed")
@@ -32,11 +32,11 @@ func AvAllocPacket() (*AVPacket, error) {
 	return (*AVPacket)(pkt), nil
 }
 
-func AvFreePacket(pkt *AVPacket) {
+func avFreePacket(pkt *AVPacket) {
 	C._av_free_packet((*C.struct_AVPacket)(pkt))
 }
 
-func AvcodecOpenContext(fmtctx *AVFormatContext, id int32) (*AVCodecContext, error) {
+func avcodecOpenContext(fmtctx *AVFormatContext, id int32) (*AVCodecContext, error) {
 	avctx := C._av_codec_open_context((*C.struct_AVFormatContext)(fmtctx), C.int(id))
 	if avctx == nil {
 		err := fmt.Errorf("open avcodec failed")
@@ -45,11 +45,11 @@ func AvcodecOpenContext(fmtctx *AVFormatContext, id int32) (*AVCodecContext, err
 	return (*AVCodecContext)(avctx), nil
 }
 
-func AvcodecFreeContext(avctx *AVCodecContext) {
+func avcodecFreeContext(avctx *AVCodecContext) {
 	C._av_codec_free_context((*C.struct_AVCodecContext)(avctx))
 }
 
-func AvcodecDecodeAudio4(avctx *AVCodecContext, frame *AVFrame, got_frame_ptr *int, avpkt *AVPacket) error {
+func avcodecDecodeAudio4(avctx *AVCodecContext, frame *AVFrame, got_frame_ptr *int, avpkt *AVPacket) error {
 	C._av_codec_decode_audio4((*C.struct_AVCodecContext)(avctx), (*C.struct_AVFrame)(frame), (*C.int)(unsafe.Pointer(got_frame_ptr)), (*C.struct_AVPacket)(avpkt))
 	return nil
 }

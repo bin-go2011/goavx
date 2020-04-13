@@ -74,7 +74,7 @@ var (
 	avGetBytesPerSampleProc *windows.Proc
 )
 
-func AvAllocFrame() (*AVFrame, error) {
+func avAllocFrame() (*AVFrame, error) {
 	if avAllocFrameProc == nil {
 		avAllocFrameProc = goavx.LoadedDLL.MustFindProc("_av_frame_alloc")
 	}
@@ -92,14 +92,14 @@ func AvAllocFrame() (*AVFrame, error) {
 	return frame, nil
 }
 
-func AvFreeFrame(frame *AVFrame) {
+func avFreeFrame(frame *AVFrame) {
 	if avFreeFrameProc == nil {
 		avFreeFrameProc = goavx.LoadedDLL.MustFindProc("_av_frame_free")
 	}
 	avFreeFrameProc.Call(frame.handle)
 }
 
-func AvGetBytesPerSample(samplefmt int32) int32 {
+func avGetBytesPerSample(samplefmt int32) int32 {
 	if avGetBytesPerSampleProc == nil {
 		avGetBytesPerSampleProc = goavx.LoadedDLL.MustFindProc("_av_get_bytes_per_sample")
 	}

@@ -7,7 +7,7 @@ const (
 )
 
 func NewAVFrame() (*AVFrame, error) {
-	frame, err := AvAllocFrame()
+	frame, err := avAllocFrame()
 	if err != nil {
 		return nil, err
 	}
@@ -15,5 +15,5 @@ func NewAVFrame() (*AVFrame, error) {
 }
 
 func (frame *AVFrame) Release() {
-	AvFreeFrame(frame)
+	avFreeFrame(frame)
 }

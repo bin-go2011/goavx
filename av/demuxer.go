@@ -8,7 +8,7 @@ type Demuxer struct {
 }
 
 func NewDemuxer(file string) (*Demuxer, error) {
-	fmtctx, err := AvformatOpenInput(file)
+	fmtctx, err := avformatOpenInput(file)
 	if fmtctx == nil {
 		return nil, err
 	}
@@ -22,17 +22,17 @@ func NewDemuxer(file string) (*Demuxer, error) {
 }
 
 func (dmx *Demuxer) Release() {
-	AvformatCloseInput(dmx.fmtctx)
+	avformatCloseInput(dmx.fmtctx)
 }
 
 func (dmx *Demuxer) FindBestAudioStream() (id int32, err error) {
-	id, err = AvFindBestStream(dmx.fmtctx, AVMEDIA_TYPE_AUDIO)
+	id, err = avFindBestStream(dmx.fmtctx, AVMEDIA_TYPE_AUDIO)
 	dmx.AudioStreamIndex = id
 	return
 }
 
 func (dmx *Demuxer) FindBestVideoStream() (id int32, err error) {
-	id, err = AvFindBestStream(dmx.fmtctx, AVMEDIA_TYPE_VIDEO)
+	id, err = avFindBestStream(dmx.fmtctx, AVMEDIA_TYPE_VIDEO)
 	dmx.VideoStreamIndex = id
 	return
 }
@@ -42,7 +42,7 @@ func (dmx *Demuxer) DumpFormat() {
 }
 
 func (dmx *Demuxer) ReadFrame(pkt *AVPacket) int32 {
-	return AvReadFrame(dmx.fmtctx, pkt)
+	return avReadFrame(dmx.fmtctx, pkt)
 }
 
 func (dmx *Demuxer) OpenAudioDecoder() (*AudioDecoder, error) {
@@ -51,7 +51,7 @@ func (dmx *Demuxer) OpenAudioDecoder() (*AudioDecoder, error) {
 		return nil, err
 	}
 
-	avctx, err := AvcodecOpenContext(dmx.fmtctx, streamIndex)
+	avctx, err := avcodecOpenContext(dmx.fmtctx, streamIndex)
 	if err != nil {
 		return nil, err
 	}

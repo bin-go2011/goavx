@@ -2,10 +2,16 @@ package av
 
 import (
 	"fmt"
+	"path/filepath"
 	"testing"
 )
 
-const SAMPLE_FILE = "../data/big_buck_bunny.mp4"
+var SAMPLE_FILE string
+
+func init() {
+	SAMPLE_FILE, _ = filepath.Abs("../data/big_buck_bunny.mp4")
+
+}
 
 func TestNewDemuxer(t *testing.T) {
 	dmx, _ := NewDemuxer(SAMPLE_FILE)
@@ -13,6 +19,6 @@ func TestNewDemuxer(t *testing.T) {
 }
 
 func TestVersion(t *testing.T) {
-	fmt.Println("libavformat: " + AvformatVersion())
-	fmt.Println("libavcodec: " + AvcodecVersion())
+	fmt.Println("libavformat: " + avformatVersion())
+	fmt.Println("libavcodec: " + avcodecVersion())
 }
