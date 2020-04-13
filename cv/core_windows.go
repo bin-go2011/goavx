@@ -13,7 +13,8 @@ type Mat struct {
 
 var (
 	cvVersionProc,
-	cvNewMatProc *windows.Proc
+	cvNewMatProc,
+	cvReleaseMatProc *windows.Proc
 )
 
 func CvVersion() string {
@@ -29,14 +30,27 @@ func CvVersion() string {
 	return fmt.Sprintf("%d.%d.%d", major, minor, subminor)
 }
 
-func CvNewMat() Mat {
+func CvNewMat() (*Mat, error) {
 	if cvNewMatProc == nil {
 		cvNewMatProc = goavx.LoadedDLL.MustFindProc("_cv_new_mat")
 	}
 
 	r1, _, _ := cvNewMatProc.Call()
 
-	return Mat{
-		handle: r1,
+	if r1 == 0 {
+		err := fmt.Errorf("failed to new Mat object")
+		return nil, err
 	}
+	return &Mat{
+		handle: r1,
+	}, nil
+
+}
+
+func CvReleaseMat(mat *Mat) {
+	if cvReleaseMatProc == nil {
+		cvReleaseMatProc = goavx.LoadedDLL.MustFindProc("_cv_release_mat")
+	}
+
+	cvReleaseMatProc.Call(uintptr(mat.handle))
 }

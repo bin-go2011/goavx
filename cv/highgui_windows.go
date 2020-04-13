@@ -25,16 +25,16 @@ func CvNamedWindow(name string, flags int) {
 	cvNamedWindowPro.Call(uintptr(unsafe.Pointer(winname)), uintptr(flags))
 }
 
-func CvWaitKey(delay int) {
+func CvWaitKey(delay int) int8 {
 	if cvWaitKeyProc == nil {
 		cvWaitKeyProc = goavx.LoadedDLL.MustFindProc("_cv_wait_key")
 	}
 
-	cvWaitKeyProc.Call(uintptr(delay))
-
+	r1, _, _ := cvWaitKeyProc.Call(uintptr(delay))
+	return int8(r1)
 }
 
-func CvImshow(name string, img Mat) {
+func CvImshow(name string, img *Mat) {
 	if cvImshowProc == nil {
 		cvImshowProc = goavx.LoadedDLL.MustFindProc("_cv_imshow")
 	}
