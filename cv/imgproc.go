@@ -26,6 +26,6 @@ func PyrDown(src *Mat, dst *Mat) {
 	cvPyrDown(src, dst)
 }
 
-func Canny(img *Mat, edges *Mat, threshold1 float64, threshold2 float64, apertureSize int, L2gradient int) {
+func Canny(img *Mat, edges *Mat, threshold1 float64, threshold2 float64, apertureSize int, L2gradient bool) {
 	cvCanny(img, edges, threshold1, threshold2, apertureSize, L2gradient)
 }

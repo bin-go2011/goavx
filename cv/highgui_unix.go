@@ -6,15 +6,15 @@ package cv
 import "C"
 
 func cvNamedWindow(name string, flags int) {
-	C._cv_named_window(C.CString(name), (C.int)(flags))
+	C._cv_named_window(C.CString(name), C.int(flags))
 }
 
 func cvWaitKey(delay int) int8 {
-	return int8(C._cv_wait_key((C.int)(delay)))
+	return int8(C._cv_wait_key(C.int(delay)))
 }
 
 func cvImshow(name string, img *Mat) {
-	C._cv_imshow(C.CString(name), (C.MatPtr)(img.handle))
+	C._cv_imshow(C.CString(name), C.MatPtr(img.handle))
 }
 
 func cvDestroyWindow(name string) {

@@ -161,7 +161,7 @@ func TestCanny(t *testing.T) {
 	cvCvtColor(img_rgb, img_gry, COLOR_BGR2GRAY)
 	w_in.ShowImage(img_gry)
 
-	cvCanny(img_gry, img_cny, 10, 100, 3, 1)
+	cvCanny(img_gry, img_cny, 10, 100, 3, true)
 	w_out.ShowImage(img_cny)
 
 	WaitKey(0)
