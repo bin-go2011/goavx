@@ -139,26 +139,30 @@ func TestPyrDown(t *testing.T) {
 }
 
 func TestCanny(t *testing.T) {
-	w_in := NewWindow("Example 2-6-2-in", WINDOW_AUTOSIZE)
+	w_in := NewWindow("Example Gray", WINDOW_AUTOSIZE)
 	defer w_in.Destory()
 
-	w_out := NewWindow("Example 2-6-2-out", WINDOW_AUTOSIZE)
+	w_out := NewWindow("Example Canny", WINDOW_AUTOSIZE)
 	defer w_out.Destory()
 
-	img1, _ := NewMat()
-	defer img1.Release()
+	img_rgb, _ := NewMat()
+	defer img_rgb.Release()
 
-	img2, _ := NewMat()
-	defer img2.Release()
+	img_gry, _ := NewMat()
+	defer img_gry.Release()
 
-	err := cvImread(SAMPLE_FILE, IMREAD_GRAYSCALE, img1)
+	img_cny, _ := NewMat()
+	defer img_cny.Release()
+
+	err := cvImread(SAMPLE_FILE, IMREAD_UNCHANGED, img_rgb)
 	if err != nil {
 		panic(err)
 	}
-	w_in.ShowImage(img1)
+	cvCvtColor(img_rgb, img_gry, COLOR_BGR2GRAY)
+	w_in.ShowImage(img_gry)
 
-	cvCanny(img1, img2, 10, 100, 3, 1)
-	w_out.ShowImage(img2)
+	cvCanny(img_gry, img_cny, 10, 100, 3, 1)
+	w_out.ShowImage(img_cny)
 
 	WaitKey(0)
 
