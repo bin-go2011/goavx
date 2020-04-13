@@ -7,3 +7,7 @@ const (
 	IMREAD_ANYDEPTH  = 2  //!< If set, return 16-bit/32-bit image when the input has the corresponding depth, otherwise convert it to 8-bit.
 	IMREAD_ANYCOLOR  = 4  //!< If set, the image is read in any possible color format.
 )
+
+func ReadImage(file string, flags int, mat *Mat) error {
+	return cvImread(file, flags, mat)
+}
