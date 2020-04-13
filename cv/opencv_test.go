@@ -101,7 +101,10 @@ func TestGaussianBlur(t *testing.T) {
 	out := img.GaussianBlur(5, 5, 3, 3)
 	defer out.Release()
 
-	w_out.ShowImage(out)
+	out1 := out.GaussianBlur(5, 5, 3, 3)
+	defer out1.Release()
+
+	w_out.ShowImage(out1)
 
 	w_in.WaitKey(0)
 }
