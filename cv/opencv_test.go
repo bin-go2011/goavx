@@ -108,3 +108,28 @@ func TestGaussianBlur(t *testing.T) {
 
 	w_in.WaitKey(0)
 }
+
+func TestPyrDown(t *testing.T) {
+	w_in := NewWindow("Example 2-6-in", WINDOW_AUTOSIZE)
+	defer w_in.Destory()
+
+	w_out := NewWindow("Example 2-6-out", WINDOW_AUTOSIZE)
+	defer w_out.Destory()
+
+	img1, _ := NewMat()
+	defer img1.Release()
+
+	img2, _ := NewMat()
+	defer img2.Release()
+
+	err := CvImread(SAMPLE_FILE, IMREAD_UNCHANGED, img1)
+	if err != nil {
+		panic(err)
+	}
+	w_in.ShowImage(img1)
+
+	CvPyrDown(img1, img2)
+	w_out.ShowImage(img2)
+
+	w_in.WaitKey(0)
+}
