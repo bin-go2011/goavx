@@ -48,7 +48,7 @@ func CvVideoCaptureRead(cap *VideoCapture, mat *Mat) error {
 func CvVideoCaptureOpenFile(cap *VideoCapture, filename string) error {
 	ret := C._cv_videocapture_open_file((C.VideoCapturePtr)(cap.handle), (C.CString)(filename))
 	if int(ret) < 0 {
-		err := fmt.Errorf("failed to open video file %s", filename)
+		err := fmt.Errorf("no more data to open video file %s", filename)
 		return err
 	}
 

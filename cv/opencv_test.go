@@ -2,14 +2,19 @@ package cv
 
 import (
 	"fmt"
+	"path/filepath"
 	"testing"
 )
 
-const (
-	SAMPLE_VIDEO = "../data/big_buck_bunny.mp4"
-	SAMPLE_FILE  = "../data/lena.jpg"
+var (
+	SAMPLE_VIDEO string
+	SAMPLE_FILE  string
 )
 
+func init() {
+	SAMPLE_VIDEO, _ = filepath.Abs("../data/big_buck_bunny.mp4")
+	SAMPLE_FILE, _ = filepath.Abs("../data/lena.jpg")
+}
 func TestVersion(t *testing.T) {
 	fmt.Println(CvVersion())
 }
@@ -29,7 +34,7 @@ func TestDisplayPicture(t *testing.T) {
 	w.WaitKey(0)
 }
 
-func TestPlayVideo(t *testing.T) {
+func TestOpenVideoDevice(t *testing.T) {
 	w := NewWindow("Example 2-3", WINDOW_AUTOSIZE)
 	defer w.Destory()
 
@@ -54,11 +59,11 @@ func TestPlayVideo(t *testing.T) {
 	}
 }
 
-func TestPlayVideoFile(t *testing.T) {
+func TestOpenVideoFile(t *testing.T) {
 	w := NewWindow("Example 2-4", WINDOW_AUTOSIZE)
 	defer w.Destory()
 
-	cap, err := OpenVideoFile(SAMPLE_FILE)
+	cap, err := OpenVideoFile(SAMPLE_VIDEO)
 	if err != nil {
 		panic(err)
 	}
