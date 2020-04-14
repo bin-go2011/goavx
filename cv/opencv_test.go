@@ -44,6 +44,9 @@ func TestOpenVideoDevice(t *testing.T) {
 	}
 	defer cap.Release()
 
+	if !cap.IsOpened() { // check if we succeeded
+		panic("Couldn't open capture.")
+	}
 	mat, _ := NewMat()
 	defer mat.Release()
 

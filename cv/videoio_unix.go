@@ -1,6 +1,7 @@
 package cv
 
 /*
+#include <stdbool.h>
 #include "goavx/cv/videoio.h"
 */
 import "C"
@@ -53,4 +54,13 @@ func cvVideoCaptureOpenFile(cap *VideoCapture, filename string) error {
 	}
 
 	return nil
+}
+
+func cvVideoCaptureIsOpened(cap *VideoCapture) bool {
+	opened := C._cv_videocapture_is_opened(C.VideoCapturePtr(cap.handle))
+	if opened {
+		return true
+	} else {
+		return false
+	}
 }

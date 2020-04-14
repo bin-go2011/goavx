@@ -35,3 +35,7 @@ func (cap *VideoCapture) Release() {
 func (cap *VideoCapture) Read(mat *Mat) error {
 	return cvVideoCaptureRead(cap, mat)
 }
+
+func (cap *VideoCapture) IsOpened() bool {
+	return cvVideoCaptureIsOpened(cap)
+}
