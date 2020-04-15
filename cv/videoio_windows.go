@@ -17,7 +17,8 @@ var (
 	cvVideoCaptureOpenDeviceProc,
 	cvReleaseVideoCaptureProc,
 	cvVideoCaptureReadProc,
-	cvVideoCaptureOpenFileProc *windows.Proc
+	cvVideoCaptureOpenFileProc,
+	cvVideoCaptureIsOpenedProc *windows.Proc
 )
 
 func cvNewVideoCapture() (*VideoCapture, error) {
@@ -84,4 +85,17 @@ func cvVideoCaptureOpenFile(cap *VideoCapture, filename string) error {
 
 	return nil
 
+}
+
+func cvVideoCaptureIsOpened(cap *VideoCapture) bool {
+	if cvVideoCaptureIsOpenedProc == nil {
+		cvVideoCaptureIsOpenedProc = goavx.LoadedDLL.MustFindProc("_cv_videocapture_is_opened")
+	}
+
+	r1, _, _ := cvVideoCaptureIsOpenedProc.Call(uintptr(cap.handle))
+	if int(r1) > 0 {
+		return true
+	} else {
+		return false
+	}
 }
