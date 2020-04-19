@@ -7,3 +7,7 @@ func NewMat() (*Mat, error) {
 func (m *Mat) Release() {
 	cvReleaseMat(m)
 }
+
+func (m *Mat) Shape() (int, int) {
+	return cvMatShape(m)
+}

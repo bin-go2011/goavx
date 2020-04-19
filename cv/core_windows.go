@@ -14,7 +14,9 @@ type Mat struct {
 var (
 	cvVersionProc,
 	cvNewMatProc,
-	cvReleaseMatProc *windows.Proc
+	cvReleaseMatProc,
+	cvMatRowsProc,
+	cvMatColsProc *windows.Proc
 )
 
 func cvVersion() string {
@@ -53,4 +55,18 @@ func cvReleaseMat(mat *Mat) {
 	}
 
 	cvReleaseMatProc.Call(uintptr(mat.handle))
+}
+
+func cvMatShape(mat *Mat) (rows int, cols int) {
+	if cvMatColsProc == nil {
+		cvMatColsProc = goavx.LoadedDLL.MustFindProc("_cv_mat_cols")
+	}
+
+	if cvMatRowsProc == nil {
+		cvMatRowsProc = goavx.LoadedDLL.MustFindProc("_cv_mat_rows")
+	}
+	r1, _, _ := cvMatRowsProc.Call(uintptr(mat.handle))
+	c1, _, _ := cvMatColsProc.Call(uintptr(mat.handle))
+
+	return int(r1), int(c1)
 }
