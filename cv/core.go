@@ -8,6 +8,6 @@ func (m *Mat) Release() {
 	cvReleaseMat(m)
 }
 
-func (m *Mat) Shape() (int, int) {
+func (m *Mat) Shape() (int, int, int) {
 	return cvMatShape(m)
 }

@@ -16,7 +16,8 @@ var (
 	cvNewMatProc,
 	cvReleaseMatProc,
 	cvMatRowsProc,
-	cvMatColsProc *windows.Proc
+	cvMatColsProc,
+	cvMatChannelsProc *windows.Proc
 )
 
 func cvVersion() string {
@@ -57,7 +58,7 @@ func cvReleaseMat(mat *Mat) {
 	cvReleaseMatProc.Call(uintptr(mat.handle))
 }
 
-func cvMatShape(mat *Mat) (rows int, cols int) {
+func cvMatShape(mat *Mat) (int, int, int) {
 	if cvMatColsProc == nil {
 		cvMatColsProc = goavx.LoadedDLL.MustFindProc("_cv_mat_cols")
 	}
@@ -65,8 +66,14 @@ func cvMatShape(mat *Mat) (rows int, cols int) {
 	if cvMatRowsProc == nil {
 		cvMatRowsProc = goavx.LoadedDLL.MustFindProc("_cv_mat_rows")
 	}
-	r1, _, _ := cvMatRowsProc.Call(uintptr(mat.handle))
-	c1, _, _ := cvMatColsProc.Call(uintptr(mat.handle))
 
-	return int(r1), int(c1)
+	if cvMatChannelsProc == nil {
+		cvMatChannelsProc = goavx.LoadedDLL.MustFindProc("_cv_mat_channels")
+	}
+
+	rows, _, _ := cvMatRowsProc.Call(uintptr(mat.handle))
+	cols, _, _ := cvMatColsProc.Call(uintptr(mat.handle))
+	chs, _, _ := cvMatChannelsProc.Call(uintptr(mat.handle))
+
+	return int(rows), int(cols), int(chs)
 }
