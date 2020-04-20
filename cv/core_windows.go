@@ -2,6 +2,7 @@ package cv
 
 import (
 	"fmt"
+	"unsafe"
 
 	"github.com/bin-go2011/goavx"
 	"golang.org/x/sys/windows"
@@ -11,12 +12,15 @@ type Mat struct {
 	handle uintptr
 }
 
+const (
+	offsetOfMatRows = 8
+	offsetOfMatCols = 12
+)
+
 var (
 	cvVersionProc,
 	cvNewMatProc,
 	cvReleaseMatProc,
-	cvMatRowsProc,
-	cvMatColsProc,
 	cvMatChannelsProc *windows.Proc
 )
 
@@ -58,22 +62,14 @@ func cvReleaseMat(mat *Mat) {
 	cvReleaseMatProc.Call(uintptr(mat.handle))
 }
 
-func cvMatShape(mat *Mat) (int, int, int) {
-	if cvMatColsProc == nil {
-		cvMatColsProc = goavx.LoadedDLL.MustFindProc("_cv_mat_cols")
-	}
-
-	if cvMatRowsProc == nil {
-		cvMatRowsProc = goavx.LoadedDLL.MustFindProc("_cv_mat_rows")
-	}
-
+func cvMatShape(mat *Mat) (rows int32, cols int32, channels int32) {
 	if cvMatChannelsProc == nil {
 		cvMatChannelsProc = goavx.LoadedDLL.MustFindProc("_cv_mat_channels")
 	}
 
-	rows, _, _ := cvMatRowsProc.Call(uintptr(mat.handle))
-	cols, _, _ := cvMatColsProc.Call(uintptr(mat.handle))
+	rows = *(*int32)(unsafe.Pointer(uintptr(mat.handle) + offsetOfMatRows))
+	cols = *(*int32)(unsafe.Pointer(uintptr(mat.handle) + offsetOfMatCols))
 	chs, _, _ := cvMatChannelsProc.Call(uintptr(mat.handle))
 
-	return int(rows), int(cols), int(chs)
+	return rows, cols, int32(chs)
 }
