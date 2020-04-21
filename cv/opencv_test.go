@@ -23,7 +23,7 @@ func TestDisplayPicture(t *testing.T) {
 	mat, _ := NewMat()
 	defer mat.Release()
 
-	err := cvImread(SAMPLE_FILE, IMREAD_GRAYSCALE, mat)
+	err := ReadImage(SAMPLE_FILE, IMREAD_GRAYSCALE, mat)
 	if err != nil {
 		panic(err)
 	}
@@ -95,21 +95,17 @@ func TestGaussianBlur(t *testing.T) {
 	img, _ := NewMat()
 	defer img.Release()
 
-	err := cvImread(SAMPLE_FILE, IMREAD_UNCHANGED, img)
+	err := ReadImage(SAMPLE_FILE, IMREAD_UNCHANGED, img)
 	if err != nil {
 		panic(err)
 	}
 	w_in.ShowImage(img)
 
-	out, _ := NewMat()
+	out := GaussianBlur(img, 5, 5, 3, 3)
 	defer out.Release()
 
-	GaussianBlur(img, out, 5, 5, 3, 3)
-
-	out1, _ := NewMat()
+	out1 := GaussianBlur(out, 5, 5, 3, 3)
 	defer out1.Release()
-
-	GaussianBlur(out, out1, 5, 5, 3, 3)
 
 	w_out.ShowImage(out1)
 
@@ -129,7 +125,7 @@ func TestPyrDown(t *testing.T) {
 	img2, _ := NewMat()
 	defer img2.Release()
 
-	err := cvImread(SAMPLE_FILE, IMREAD_UNCHANGED, img1)
+	err := ReadImage(SAMPLE_FILE, IMREAD_UNCHANGED, img1)
 	if err != nil {
 		panic(err)
 	}
@@ -148,23 +144,20 @@ func TestCanny(t *testing.T) {
 	w_out := NewWindow("Example Canny", WINDOW_AUTOSIZE)
 	defer w_out.Destory()
 
-	img_rgb, _ := NewMat()
-	defer img_rgb.Release()
-
-	img_gry, _ := NewMat()
-	defer img_gry.Release()
-
-	img_cny, _ := NewMat()
-	defer img_cny.Release()
-
-	err := cvImread(SAMPLE_FILE, IMREAD_UNCHANGED, img_rgb)
+	img_rgb, err := Imread(SAMPLE_FILE)
 	if err != nil {
 		panic(err)
 	}
-	cvCvtColor(img_rgb, img_gry, COLOR_BGR2GRAY)
+	defer img_rgb.Release()
+
+	img_gry := CvtColor(img_rgb, COLOR_BGR2GRAY)
+	defer img_gry.Release()
+
 	w_in.ShowImage(img_gry)
 
-	cvCanny(img_gry, img_cny, 10, 100, 3, true)
+	img_cny := Canny(img_gry, 10, 100, 3, true)
+	defer img_cny.Release()
+
 	w_out.ShowImage(img_cny)
 
 	WaitKey(0)
@@ -177,6 +170,12 @@ func TestSimplerAPIs(t *testing.T) {
 
 	w := Imshow("Load Image", mat)
 	defer w.Destory()
+
+	gray_image := CvtColor(mat, COLOR_BGR2GRAY)
+	defer gray_image.Release()
+
+	w1 := Imshow("Gray Image", gray_image)
+	defer w1.Destory()
 
 	WaitKey(0)
 }
