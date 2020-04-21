@@ -173,7 +173,10 @@ func TestCanny(t *testing.T) {
 
 func TestSimplerAPIs(t *testing.T) {
 	mat, _ := Imread(SAMPLE_FILE)
+	defer mat.Release()
+
 	w := Imshow("Load Image", mat)
-	WaitKey(0)
 	defer w.Destory()
+
+	WaitKey(0)
 }
