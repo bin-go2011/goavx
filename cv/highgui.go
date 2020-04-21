@@ -28,3 +28,9 @@ func (w *Window) ShowImage(mat *Mat) {
 func (w *Window) Destory() {
 	cvDestroyWindow(w.name)
 }
+
+func Imshow(winname string, mat *Mat) *Window {
+	w := NewWindow(winname, WINDOW_AUTOSIZE)
+	w.ShowImage(mat)
+	return w
+}

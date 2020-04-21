@@ -11,3 +11,15 @@ const (
 func ReadImage(file string, flags int, mat *Mat) error {
 	return cvImread(file, flags, mat)
 }
+
+func Imread(file string) (*Mat, error) {
+	mat, err := NewMat()
+	if err != nil {
+		return nil, err
+	}
+	err = cvImread(file, IMREAD_UNCHANGED, mat)
+	if err != nil {
+		return nil, err
+	}
+	return mat, nil
+}
