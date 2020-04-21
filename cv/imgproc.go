@@ -18,14 +18,38 @@ const (
 	COLOR_BGR2GRAY = 6 //!< convert between RGB/BGR and grayscale, @ref color_convert_rgb_gray "color conversions"
 )
 
-func GaussianBlur(src *Mat, dst *Mat, ksizeX int, ksizeY int, sigmaX float64, sigmaY float64) {
+func GaussianBlur(src *Mat, ksizeX int, ksizeY int, sigmaX float64, sigmaY float64) *Mat {
+	dst, err := NewMat()
+	if err != nil {
+		return nil
+	}
 	cvGaussianBlur(src, dst, ksizeX, ksizeY, sigmaX, sigmaY, BORDER_DEFAULT)
+	return dst
 }
 
-func PyrDown(src *Mat, dst *Mat) {
+func PyrDown(src *Mat) *Mat {
+	dst, err := NewMat()
+	if err != nil {
+		return nil
+	}
 	cvPyrDown(src, dst)
+	return dst
 }
 
-func Canny(img *Mat, edges *Mat, threshold1 float64, threshold2 float64, apertureSize int, L2gradient bool) {
+func Canny(img *Mat, threshold1 float64, threshold2 float64, apertureSize int, L2gradient bool) *Mat {
+	edges, err := NewMat()
+	if err != nil {
+		return nil
+	}
 	cvCanny(img, edges, threshold1, threshold2, apertureSize, L2gradient)
+	return edges
+}
+
+func CvtColor(src *Mat, code int) *Mat {
+	dst, err := NewMat()
+	if err != nil {
+		return nil
+	}
+	cvCvtColor(src, dst, code)
+	return dst
 }
