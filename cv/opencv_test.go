@@ -64,8 +64,14 @@ func TestOpenVideoDevice(t *testing.T) {
 			panic(err)
 		}
 		w.ShowImage(mat)
-		if WaitKey(20) == int8('q') {
-			break
+
+		if key := WaitKey(20); key > 0 {
+			if key == int8('q') {
+				break
+			} else if key == int8('c') {
+				Imwrite("save.png", mat)
+				break
+			}
 		}
 	}
 }
