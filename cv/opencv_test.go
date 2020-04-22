@@ -64,7 +64,7 @@ func TestOpenVideoDevice(t *testing.T) {
 			panic(err)
 		}
 		w.ShowImage(mat)
-		if key := WaitKey(33); key >= 0 {
+		if WaitKey(33) == int8('q') {
 			break
 		}
 	}
