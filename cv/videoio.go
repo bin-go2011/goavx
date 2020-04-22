@@ -39,3 +39,7 @@ func (cap *VideoCapture) Read(mat *Mat) error {
 func (cap *VideoCapture) IsOpened() bool {
 	return cvVideoCaptureIsOpened(cap)
 }
+
+func (cap *VideoCapture) Get(propId int) float64 {
+	return cvVideoCaptureGet(cap, propId)
+}

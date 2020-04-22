@@ -8,6 +8,12 @@ import (
 	"golang.org/x/sys/windows"
 )
 
+const (
+	CAP_PROP_FRAME_WIDTH  = 3
+	CAP_PROP_FRAME_HEIGHT = 4
+	CAP_PROP_FPS          = 5
+)
+
 type VideoCapture struct {
 	handle uintptr
 }
@@ -18,7 +24,8 @@ var (
 	cvReleaseVideoCaptureProc,
 	cvVideoCaptureReadProc,
 	cvVideoCaptureOpenFileProc,
-	cvVideoCaptureIsOpenedProc *windows.Proc
+	cvVideoCaptureIsOpenedProc,
+	cvVideoCaptureGetProc *windows.Proc
 )
 
 func cvNewVideoCapture() (*VideoCapture, error) {
@@ -98,4 +105,14 @@ func cvVideoCaptureIsOpened(cap *VideoCapture) bool {
 	} else {
 		return false
 	}
+}
+
+func cvVideoCaptureGet(cap *VideoCapture, propId int) float64 {
+	if cvVideoCaptureGetProc == nil {
+		cvVideoCaptureGetProc = goavx.LoadedDLL.MustFindProc("_cv_videocapture_get")
+	}
+
+	r1, _, _ := cvVideoCaptureGetProc.Call(uintptr(cap.handle), uintptr(propId))
+
+	return float64(r1)
 }
