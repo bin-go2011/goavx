@@ -4,6 +4,7 @@ const (
 	CAP_PROP_FRAME_WIDTH  = 3
 	CAP_PROP_FRAME_HEIGHT = 4
 	CAP_PROP_FPS          = 5
+	CAP_PROP_FOURCC       = 6
 )
 
 func OpenVideoDevice(device int) (*VideoCapture, error) {

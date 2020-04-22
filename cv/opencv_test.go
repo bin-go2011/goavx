@@ -47,10 +47,12 @@ func TestOpenVideoDevice(t *testing.T) {
 	frame_width := cap.Get(CAP_PROP_FRAME_WIDTH)
 	frame_height := cap.Get(CAP_PROP_FRAME_HEIGHT)
 	fps := cap.Get(CAP_PROP_FPS)
+	fourcc := cap.Get(CAP_PROP_FOURCC)
 
 	fmt.Printf("CAP_PROP_FRAME_WIDTH: %d\n", frame_width)
 	fmt.Printf("CAP_PROP_FRAME_HEIGHT: %d\n", frame_height)
 	fmt.Printf("CAP_PROP_FPS: %d\n", fps)
+	fmt.Printf("CAP_PROP_FOURCC: %c%c%c%c\n", fourcc&0xff, fourcc>>8&0xff, fourcc>>16&0xff, fourcc>>24&0xff)
 
 	if !cap.IsOpened() { // check if we succeeded
 		panic("Couldn't open capture.")
