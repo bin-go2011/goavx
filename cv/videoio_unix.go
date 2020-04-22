@@ -64,3 +64,7 @@ func cvVideoCaptureIsOpened(cap *VideoCapture) bool {
 		return false
 	}
 }
+
+func cvVideoCaptureGet(cap *VideoCapture, propId int) int32 {
+	return int32(C._cv_videocapture_get(C.VideoCapturePtr(cap.handle), C.int(propId)))
+}

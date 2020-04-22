@@ -1,5 +1,11 @@
 package cv
 
+const (
+	CAP_PROP_FRAME_WIDTH  = 3
+	CAP_PROP_FRAME_HEIGHT = 4
+	CAP_PROP_FPS          = 5
+)
+
 func OpenVideoDevice(device int) (*VideoCapture, error) {
 	cap, err := cvNewVideoCapture()
 	if err != nil {

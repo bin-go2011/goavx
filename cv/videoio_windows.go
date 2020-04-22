@@ -8,12 +8,6 @@ import (
 	"golang.org/x/sys/windows"
 )
 
-const (
-	CAP_PROP_FRAME_WIDTH  = 3
-	CAP_PROP_FRAME_HEIGHT = 4
-	CAP_PROP_FPS          = 5
-)
-
 type VideoCapture struct {
 	handle uintptr
 }
