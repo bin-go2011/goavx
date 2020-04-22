@@ -9,7 +9,8 @@ import (
 )
 
 var (
-	cvImreadProc *windows.Proc
+	cvImreadProc,
+	cvImwriteProc *windows.Proc
 )
 
 func cvImread(file string, flags int, mat *Mat) error {
@@ -24,4 +25,19 @@ func cvImread(file string, flags int, mat *Mat) error {
 		return err
 	}
 	return nil
+}
+
+func cvImwrite(file string, mat *Mat) bool {
+	if cvImwriteProc == nil {
+		cvImwriteProc = goavx.LoadedDLL.MustFindProc("_cv_imwrite")
+	}
+
+	f, _ := syscall.BytePtrFromString(file)
+	r1, _, _ := cvImwriteProc.Call(uintptr(unsafe.Pointer(f)), mat.handle)
+
+	if int32(r1) > 0 {
+		return true
+	} else {
+		return false
+	}
 }

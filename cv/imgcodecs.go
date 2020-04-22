@@ -23,3 +23,7 @@ func Imread(file string) (*Mat, error) {
 	}
 	return mat, nil
 }
+
+func Imwrite(file string, mat *Mat) bool {
+	return cvImwrite(file, mat)
+}
