@@ -107,12 +107,11 @@ func cvVideoCaptureIsOpened(cap *VideoCapture) bool {
 	}
 }
 
-func cvVideoCaptureGet(cap *VideoCapture, propId int) float64 {
+func cvVideoCaptureGet(cap *VideoCapture, propId int) int32 {
 	if cvVideoCaptureGetProc == nil {
 		cvVideoCaptureGetProc = goavx.LoadedDLL.MustFindProc("_cv_videocapture_get")
 	}
 
 	r1, _, _ := cvVideoCaptureGetProc.Call(uintptr(cap.handle), uintptr(propId))
-
-	return float64(r1)
+	return int32(r1)
 }
