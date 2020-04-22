@@ -95,7 +95,9 @@ func TestOpenVideoFile(t *testing.T) {
 			break
 		}
 		w.ShowImage(mat)
-		WaitKey(33)
+		if WaitKey(33) > 0 {
+			break
+		}
 	}
 }
 
