@@ -116,7 +116,7 @@ func avcodecDecodeAudio4(avctx *AVCodecContext, frame *AVFrame, got_frame_ptr *i
 	frame.channels = *(*int32)(unsafe.Pointer(frame.handle + unsafe.Offsetof(frame.channels)))
 	frame.pkt_size = *(*int32)(unsafe.Pointer(frame.handle + unsafe.Offsetof(frame.pkt_size)))
 
-	size := frame.nb_samples * AvGetBytesPerSample(frame.format)
+	size := frame.nb_samples * avGetBytesPerSample(frame.format)
 
 	sliceHeader := (*reflect.SliceHeader)(unsafe.Pointer(&(frame.Data)))
 	sliceHeader.Cap = int(size)
