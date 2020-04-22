@@ -16,3 +16,7 @@ func (m *Mat) Release() {
 func (m *Mat) Shape() (int32, int32, int32) {
 	return cvMatShape(m)
 }
+
+func Version() string {
+	return cvVersion()
+}
