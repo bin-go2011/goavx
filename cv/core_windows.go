@@ -12,11 +12,6 @@ type Mat struct {
 	handle uintptr
 }
 
-const (
-	offsetOfMatRows = 8
-	offsetOfMatCols = 12
-)
-
 var (
 	cvVersionProc,
 	cvNewMatProc,

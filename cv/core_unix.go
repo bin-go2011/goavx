@@ -6,6 +6,7 @@ package cv
 import "C"
 import (
 	"fmt"
+	"unsafe"
 )
 
 type Mat struct {
@@ -33,4 +34,12 @@ func cvNewMat() (*Mat, error) {
 
 func cvReleaseMat(mat *Mat) {
 	C._cv_release_mat(C.MatPtr(mat.handle))
+}
+
+func cvMatShape(mat *Mat) (rows int32, cols int32, channels int32) {
+	rows = *(*int32)(unsafe.Pointer(uintptr(mat.handle) + offsetOfMatRows))
+	cols = *(*int32)(unsafe.Pointer(uintptr(mat.handle) + offsetOfMatCols))
+	channels = int32(C._cv_mat_channels(C.MatPtr(mat.handle)))
+
+	return rows, cols, channels
 }
