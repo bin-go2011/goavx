@@ -197,3 +197,27 @@ func TestSimplerAPIs(t *testing.T) {
 
 	WaitKey(0)
 }
+
+func TestLaplacian(t *testing.T) {
+	mat, _ := Imread(SAMPLE_FILE)
+	defer mat.Release()
+
+	w := Imshow("Original Image", mat)
+	defer w.Destory()
+
+	gray_image := CvtColor(mat, COLOR_BGR2GRAY)
+	defer gray_image.Release()
+
+	const MEDIAN_BLUR_FILTER_SIZE = 7
+	blurred_image := CvMedianBlur(gray_image, MEDIAN_BLUR_FILTER_SIZE)
+	defer blurred_image.Release()
+
+	const LAPLACIAN_FILTER_SIZE = 5
+	edges := CvLaplacian(blurred_image, CV_8U, LAPLACIAN_FILTER_SIZE)
+	defer edges.Release()
+
+	w1 := Imshow("Filtered Image", edges)
+	defer w1.Destory()
+
+	WaitKey(0)
+}

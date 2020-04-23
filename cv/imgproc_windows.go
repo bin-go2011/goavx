@@ -11,7 +11,9 @@ var (
 	cvGaussianBlurProc,
 	cvPyrDownProc,
 	cvCannyProc,
-	cvCvtColorProc *windows.Proc
+	cvCvtColorProc,
+	cvMedianBlurProc,
+	cvLaplacianProc *windows.Proc
 )
 
 func cvGaussianBlur(src *Mat, dst *Mat, ksizeX int, ksizeY int, sigmaX float64, sigmaY float64, borderType int) {
@@ -48,4 +50,20 @@ func cvCvtColor(src *Mat, dst *Mat, code int) {
 		cvCvtColorProc = goavx.LoadedDLL.MustFindProc("_cv_cvt_color")
 	}
 	cvCvtColorProc.Call(uintptr(src.handle), uintptr(dst.handle), uintptr(code))
+}
+
+func cvMedianBlur(src *Mat, dst *Mat, ksize int) {
+	if cvMedianBlurProc == nil {
+		cvMedianBlurProc = goavx.LoadedDLL.MustFindProc("_cv_median_blur")
+	}
+	cvMedianBlurProc.Call(uintptr(src.handle), uintptr(dst.handle), uintptr(ksize))
+}
+
+func cvLaplacian(src *Mat, dst *Mat, ddepth int, ksize int) {
+	if cvLaplacianProc == nil {
+		cvLaplacianProc = goavx.LoadedDLL.MustFindProc("_cv_laplacian")
+	}
+
+	cvLaplacianProc.Call(uintptr(src.handle), uintptr(dst.handle), uintptr(ddepth), uintptr(ksize),
+		uintptr(math.Float64bits(1)), uintptr(math.Float64bits(1)), uintptr(BORDER_DEFAULT))
 }

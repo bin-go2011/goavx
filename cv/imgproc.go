@@ -53,3 +53,21 @@ func CvtColor(src *Mat, code int) *Mat {
 	cvCvtColor(src, dst, code)
 	return dst
 }
+
+func CvMedianBlur(src *Mat, ksize int) *Mat {
+	dst, err := NewMat()
+	if err != nil {
+		return nil
+	}
+	cvMedianBlur(src, dst, ksize)
+	return dst
+}
+
+func CvLaplacian(src *Mat, ddepth int, ksize int) *Mat {
+	dst, err := NewMat()
+	if err != nil {
+		return nil
+	}
+	cvLaplacian(src, dst, ddepth, ksize)
+	return dst
+}
