@@ -13,7 +13,8 @@ var (
 	cvCannyProc,
 	cvCvtColorProc,
 	cvMedianBlurProc,
-	cvLaplacianProc *windows.Proc
+	cvLaplacianProc,
+	cvThresholdProc *windows.Proc
 )
 
 func cvGaussianBlur(src *Mat, dst *Mat, ksizeX int, ksizeY int, sigmaX float64, sigmaY float64, borderType int) {
@@ -65,5 +66,14 @@ func cvLaplacian(src *Mat, dst *Mat, ddepth int, ksize int) {
 	}
 
 	cvLaplacianProc.Call(uintptr(src.handle), uintptr(dst.handle), uintptr(ddepth), uintptr(ksize),
-		uintptr(math.Float64bits(1)), uintptr(math.Float64bits(1)), uintptr(BORDER_DEFAULT))
+		uintptr(math.Float64bits(1.0)), uintptr(math.Float64bits(1.0)), uintptr(BORDER_DEFAULT))
+}
+
+func cvThreshold(src *Mat, dst *Mat, thresh float64, maxval float64, threshold_type int) {
+	if cvThresholdProc == nil {
+		cvThresholdProc = goavx.LoadedDLL.MustFindProc("_cv_threshold")
+	}
+
+	cvThresholdProc.Call(uintptr(src.handle), uintptr(dst.handle),
+		uintptr(math.Float64bits(thresh)), uintptr(math.Float64bits(maxval)), uintptr(threshold_type))
 }
