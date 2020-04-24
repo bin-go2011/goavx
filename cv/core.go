@@ -15,6 +15,10 @@ const (
 	offsetOfMatCols = 12
 )
 
+func Version() string {
+	return cvVersion()
+}
+
 func NewMat() (*Mat, error) {
 	return cvNewMat()
 }
@@ -27,6 +31,6 @@ func (m *Mat) Shape() (int32, int32, int32) {
 	return cvMatShape(m)
 }
 
-func Version() string {
-	return cvVersion()
+func (m *Mat) Size() (width int32, height int32) {
+	return cvMatSize(m)
 }

@@ -16,7 +16,8 @@ var (
 	cvVersionProc,
 	cvNewMatProc,
 	cvReleaseMatProc,
-	cvMatChannelsProc *windows.Proc
+	cvMatChannelsProc,
+	cvMatSizeProc *windows.Proc
 )
 
 func cvVersion() string {
@@ -67,4 +68,13 @@ func cvMatShape(mat *Mat) (rows int32, cols int32, channels int32) {
 	chs, _, _ := cvMatChannelsProc.Call(uintptr(mat.handle))
 
 	return rows, cols, int32(chs)
+}
+
+func cvMatSize(mat *Mat) (width int32, height int32) {
+	if cvMatSizeProc == nil {
+		cvMatSizeProc = goavx.LoadedDLL.MustFindProc("_cv_mat_size")
+	}
+
+	cvMatSizeProc.Call(uintptr(mat.handle), uintptr(unsafe.Pointer(&width)), uintptr(unsafe.Pointer(&height)))
+	return
 }
