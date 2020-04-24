@@ -47,6 +47,6 @@ func (cap *VideoCapture) IsOpened() bool {
 	return cvVideoCaptureIsOpened(cap)
 }
 
-func (cap *VideoCapture) Get(propId int) int32 {
+func (cap *VideoCapture) Get(propId int) float64 {
 	return cvVideoCaptureGet(cap, propId)
 }
