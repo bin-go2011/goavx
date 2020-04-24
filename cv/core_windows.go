@@ -15,6 +15,8 @@ type Mat struct {
 var (
 	cvVersionProc,
 	cvNewMatProc,
+	cvNewMatWithProc,
+	cvNewMatFromSizeProc,
 	cvReleaseMatProc,
 	cvMatChannelsProc,
 	cvMatSizeProc *windows.Proc
@@ -39,6 +41,39 @@ func cvNewMat() (*Mat, error) {
 	}
 
 	r1, _, _ := cvNewMatProc.Call()
+
+	if r1 == 0 {
+		err := fmt.Errorf("failed to new Mat object")
+		return nil, err
+	}
+	return &Mat{
+		handle: r1,
+	}, nil
+}
+
+func cvNewMatWith(width int, height int, mt int) (*Mat, error) {
+	if cvNewMatWithProc == nil {
+		cvNewMatWithProc = goavx.LoadedDLL.MustFindProc("_cv_new_mat_with")
+	}
+
+	r1, _, _ := cvNewMatWithProc.Call(uintptr(width), uintptr(height), uintptr(mt))
+
+	if r1 == 0 {
+		err := fmt.Errorf("failed to new Mat object")
+		return nil, err
+	}
+	return &Mat{
+		handle: r1,
+	}, nil
+
+}
+
+func cvNewMatFromSize(size CvSize, mt int) (*Mat, error) {
+	if cvNewMatFromSizeProc == nil {
+		cvNewMatFromSizeProc = goavx.LoadedDLL.MustFindProc("_cv_new_mat_from_size")
+	}
+
+	r1, _, _ := cvNewMatFromSizeProc.Call(uintptr(unsafe.Pointer(&size)), uintptr(mt))
 
 	if r1 == 0 {
 		err := fmt.Errorf("failed to new Mat object")
