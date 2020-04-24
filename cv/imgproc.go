@@ -29,6 +29,27 @@ const (
 	COLOR_BGR2GRAY = 6 //!< convert between RGB/BGR and grayscale, @ref color_convert_rgb_gray "color conversions"
 )
 
+const (
+	INTER_NEAREST = 0
+	/** bilinear interpolation */
+	INTER_LINEAR = 1
+	/** bicubic interpolation */
+	INTER_CUBIC = 2
+	/** resampling using pixel area relation. It may be a preferred method for image decimation, as
+	  it gives moire'-free results. But when the image is zoomed, it is similar to the INTER_NEAREST
+	  method. */
+	INTER_AREA = 3
+	/** Lanczos interpolation over 8x8 neighborhood */
+	INTER_LANCZOS4 = 4
+	/** Bit exact bilinear interpolation */
+	INTER_LINEAR_EXACT = 5
+	/** mask for interpolation codes */
+	INTER_MAX = 7
+	/** flag, fills all of the destination image pixels. If some of them correspond to outliers in the
+	  source image, they are set to zero */
+	WARP_FILL_OUTLIERS = 8
+)
+
 func GaussianBlur(src *Mat, ksizeX int, ksizeY int, sigmaX float64, sigmaY float64) *Mat {
 	dst, err := NewMat()
 	if err != nil {
@@ -90,4 +111,8 @@ func CvThreshold(src *Mat, thresh float64, maxval float64, thresh_type int) *Mat
 	}
 	cvThreshold(src, dst, thresh, maxval, thresh_type)
 	return dst
+}
+
+func CvResize(src *Mat, dst *Mat, size CvSize, fx float64, fy float64, interpolation int) {
+	cvResize(src, dst, size, fx, fy, interpolation)
 }

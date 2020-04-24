@@ -131,11 +131,11 @@ func TestGaussianBlur(t *testing.T) {
 }
 
 func TestPyrDown(t *testing.T) {
-	w_in := NewWindow("Example 2-6-in", WINDOW_AUTOSIZE)
-	defer w_in.Destory()
+	in := NewWindow("Example 2-6-in", WINDOW_AUTOSIZE)
+	defer in.Destory()
 
-	w_out := NewWindow("Example 2-6-out", WINDOW_AUTOSIZE)
-	defer w_out.Destory()
+	out := NewWindow("Example 2-6-out", WINDOW_AUTOSIZE)
+	defer out.Destory()
 
 	img1, _ := NewMat()
 	defer img1.Release()
@@ -147,36 +147,36 @@ func TestPyrDown(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	w_in.ShowImage(img1)
+	in.ShowImage(img1)
 
 	cvPyrDown(img1, img2)
-	w_out.ShowImage(img2)
+	out.ShowImage(img2)
 
 	WaitKey(0)
 }
 
 func TestCanny(t *testing.T) {
-	w_in := NewWindow("Example Gray", WINDOW_AUTOSIZE)
-	defer w_in.Destory()
+	in := NewWindow("Example Gray", WINDOW_AUTOSIZE)
+	defer in.Destory()
 
-	w_out := NewWindow("Example Canny", WINDOW_AUTOSIZE)
-	defer w_out.Destory()
+	out := NewWindow("Example Canny", WINDOW_AUTOSIZE)
+	defer out.Destory()
 
-	img_rgb, err := Imread(SAMPLE_FILE)
+	rgb, err := Imread(SAMPLE_FILE)
 	if err != nil {
 		panic(err)
 	}
-	defer img_rgb.Release()
+	defer rgb.Release()
 
-	img_gry := CvtColor(img_rgb, COLOR_BGR2GRAY)
-	defer img_gry.Release()
+	gry := CvtColor(rgb, COLOR_BGR2GRAY)
+	defer gry.Release()
 
-	w_in.ShowImage(img_gry)
+	in.ShowImage(gry)
 
-	img_cny := Canny(img_gry, 10, 100, 3, true)
-	defer img_cny.Release()
+	cny := Canny(gry, 10, 100, 3, true)
+	defer cny.Release()
 
-	w_out.ShowImage(img_cny)
+	out.ShowImage(cny)
 
 	WaitKey(0)
 
@@ -189,10 +189,10 @@ func TestSimplerAPIs(t *testing.T) {
 	w := Imshow("Load Image", mat)
 	defer w.Destory()
 
-	gray_image := CvtColor(mat, COLOR_BGR2GRAY)
-	defer gray_image.Release()
+	gray := CvtColor(mat, COLOR_BGR2GRAY)
+	defer gray.Release()
 
-	w1 := Imshow("Gray Image", gray_image)
+	w1 := Imshow("Gray Image", gray)
 	defer w1.Destory()
 
 	WaitKey(0)
@@ -222,6 +222,26 @@ func TestLaplacian(t *testing.T) {
 
 	w1 := Imshow("Filtered Image", mask)
 	defer w1.Destory()
+
+	WaitKey(0)
+}
+
+func TestResize(t *testing.T) {
+	srcColor, _ := Imread(SAMPLE_FILE)
+	defer srcColor.Release()
+
+	width, height := srcColor.Size()
+	smallSize := CvSize{
+		w: width / 2,
+		h: height / 2,
+	}
+
+	smallImg, _ := NewMatFromSize(smallSize, CV_8UC3)
+	defer smallImg.Release()
+
+	CvResize(srcColor, smallImg, smallSize, 0, 0, INTER_LINEAR)
+	out := Imshow("resided picture", smallImg)
+	defer out.Destory()
 
 	WaitKey(0)
 }
