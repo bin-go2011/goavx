@@ -86,7 +86,7 @@ func CvtColor(src *Mat, code int) *Mat {
 	return dst
 }
 
-func CvMedianBlur(src *Mat, ksize int) *Mat {
+func MedianBlur(src *Mat, ksize int) *Mat {
 	dst, err := NewMat()
 	if err != nil {
 		return nil
@@ -95,7 +95,7 @@ func CvMedianBlur(src *Mat, ksize int) *Mat {
 	return dst
 }
 
-func CvLaplacian(src *Mat, ddepth int, ksize int) *Mat {
+func Laplacian(src *Mat, ddepth int, ksize int) *Mat {
 	dst, err := NewMat()
 	if err != nil {
 		return nil
@@ -104,7 +104,7 @@ func CvLaplacian(src *Mat, ddepth int, ksize int) *Mat {
 	return dst
 }
 
-func CvThreshold(src *Mat, thresh float64, maxval float64, thresh_type int) *Mat {
+func Threshold(src *Mat, thresh float64, maxval float64, thresh_type int) *Mat {
 	dst, err := NewMat()
 	if err != nil {
 		return nil
@@ -113,6 +113,6 @@ func CvThreshold(src *Mat, thresh float64, maxval float64, thresh_type int) *Mat
 	return dst
 }
 
-func CvResize(src *Mat, dst *Mat, size CvSize, fx float64, fy float64, interpolation int) {
+func Resize(src *Mat, dst *Mat, size CvSize, fx float64, fy float64, interpolation int) {
 	cvResize(src, dst, size, fx, fy, interpolation)
 }

@@ -209,15 +209,15 @@ func TestLaplacian(t *testing.T) {
 	defer gray.Release()
 
 	const MEDIAN_BLUR_FILTER_SIZE = 7
-	blurred := CvMedianBlur(gray, MEDIAN_BLUR_FILTER_SIZE)
+	blurred := MedianBlur(gray, MEDIAN_BLUR_FILTER_SIZE)
 	defer blurred.Release()
 
 	const LAPLACIAN_FILTER_SIZE = 5
-	edges := CvLaplacian(blurred, CV_8U, LAPLACIAN_FILTER_SIZE)
+	edges := Laplacian(blurred, CV_8U, LAPLACIAN_FILTER_SIZE)
 	defer edges.Release()
 
 	const EDGES_THRESHOLD = 80
-	mask := CvThreshold(edges, EDGES_THRESHOLD, 255, THRESH_BINARY_INV)
+	mask := Threshold(edges, EDGES_THRESHOLD, 255, THRESH_BINARY_INV)
 	defer mask.Release()
 
 	w1 := Imshow("Filtered Image", mask)
@@ -239,7 +239,7 @@ func TestResize(t *testing.T) {
 	smallImg, _ := NewMatFromSize(smallSize, CV_8UC3)
 	defer smallImg.Release()
 
-	CvResize(srcColor, smallImg, smallSize, 0, 0, INTER_LINEAR)
+	Resize(srcColor, smallImg, smallSize, 0, 0, INTER_LINEAR)
 	out := Imshow("resided picture", smallImg)
 	defer out.Destory()
 
