@@ -61,8 +61,10 @@ func TestCartoonifyImage(t *testing.T) {
 		h: height,
 	}, 0, 0, INTER_LINEAR)
 
-	dst, _ := NewMat()
+	dst, _ := NewMatWith(int(width), int(height), CV_8UC3)
 	defer dst.Release()
+
+	dst.SetTo(0)
 
 	bigImg.CopyTo(dst, mask)
 
