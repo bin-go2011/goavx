@@ -68,7 +68,7 @@ func cvNewMatWith(width int, height int, mt int) (*Mat, error) {
 
 }
 
-func cvNewMatFromSize(size CvSize, mt int) (*Mat, error) {
+func cvNewMatFromSize(size Size, mt int) (*Mat, error) {
 	if cvNewMatFromSizeProc == nil {
 		cvNewMatFromSizeProc = goavx.LoadedDLL.MustFindProc("_cv_new_mat_from_size")
 	}

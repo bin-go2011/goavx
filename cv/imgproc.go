@@ -113,6 +113,6 @@ func Threshold(src *Mat, thresh float64, maxval float64, thresh_type int) *Mat {
 	return dst
 }
 
-func Resize(src *Mat, dst *Mat, size CvSize, fx float64, fy float64, interpolation int) {
+func Resize(src *Mat, dst *Mat, size Size, fx float64, fy float64, interpolation int) {
 	cvResize(src, dst, size, fx, fy, interpolation)
 }

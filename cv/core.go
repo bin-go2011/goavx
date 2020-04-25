@@ -27,7 +27,7 @@ const (
 	CV_8UC3 = CV_8U + MatChannels3
 )
 
-type CvSize struct {
+type Size struct {
 	w int32
 	h int32
 }
@@ -49,7 +49,7 @@ func NewMatWith(width int, height int, mt int) (*Mat, error) {
 	return cvNewMatWith(width, height, mt)
 }
 
-func NewMatFromSize(size CvSize, mt int) (*Mat, error) {
+func NewMatFromSize(size Size, mt int) (*Mat, error) {
 	return cvNewMatFromSize(size, mt)
 }
 

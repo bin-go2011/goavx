@@ -80,7 +80,7 @@ func cvThreshold(src *Mat, dst *Mat, thresh float64, maxval float64, threshold_t
 		uintptr(math.Float64bits(thresh)), uintptr(math.Float64bits(maxval)), uintptr(threshold_type))
 }
 
-func cvResize(src *Mat, dst *Mat, size CvSize, fx float64, fy float64, interpolation int) {
+func cvResize(src *Mat, dst *Mat, size Size, fx float64, fy float64, interpolation int) {
 	if cvResizeProc == nil {
 		cvResizeProc = goavx.LoadedDLL.MustFindProc("_cv_resize")
 	}

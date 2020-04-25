@@ -231,7 +231,7 @@ func TestResize(t *testing.T) {
 	defer srcColor.Release()
 
 	width, height := srcColor.Size()
-	smallSize := CvSize{
+	smallSize := Size{
 		w: width / 2,
 		h: height / 2,
 	}
