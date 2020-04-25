@@ -244,7 +244,7 @@ func TestResizeAndBilateralFilter(t *testing.T) {
 	tmp, _ := NewMatFromSize(smallSize, CV_8UC3)
 	defer tmp.Release()
 
-	repetitions := 20
+	repetitions := 7
 
 	for i := 0; i < repetitions; i++ {
 		ksize := 9
@@ -255,7 +255,16 @@ func TestResizeAndBilateralFilter(t *testing.T) {
 		BilateralFilter(tmp, smallImg, ksize, sigmaColor, sigmaSpace, BORDER_DEFAULT)
 
 	}
-	out := Imshow("resized picture", smallImg)
+
+	bigImg, _ := NewMat()
+	defer bigImg.Release()
+
+	Resize(smallImg, bigImg, Size{
+		w: width,
+		h: height,
+	}, 0, 0, INTER_LINEAR)
+
+	out := Imshow("resized picture", bigImg)
 	defer out.Destory()
 
 	WaitKey(0)
