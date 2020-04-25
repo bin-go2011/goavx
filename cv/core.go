@@ -64,3 +64,7 @@ func (m *Mat) Shape() (int32, int32, int32) {
 func (m *Mat) Size() (width int32, height int32) {
 	return cvMatSize(m)
 }
+
+func (m *Mat) CopyTo(dst *Mat, mask *Mat) {
+	cvMatCopyTo(m, dst, mask)
+}
