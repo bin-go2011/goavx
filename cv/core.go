@@ -68,3 +68,7 @@ func (m *Mat) Size() (width int32, height int32) {
 func (m *Mat) CopyTo(dst *Mat, mask *Mat) {
 	cvMatCopyTo(m, dst, mask)
 }
+
+func (m *Mat) SetTo(value int) {
+	cvMatSetTo(m, value)
+}
