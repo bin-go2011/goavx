@@ -116,3 +116,7 @@ func Threshold(src *Mat, thresh float64, maxval float64, thresh_type int) *Mat {
 func Resize(src *Mat, dst *Mat, size Size, fx float64, fy float64, interpolation int) {
 	cvResize(src, dst, size, fx, fy, interpolation)
 }
+
+func BilateralFilter(src *Mat, dst *Mat, d int, sigmaColor float64, sigmaSpace float64, borderType int) {
+	cvBilateralFilter(src, dst, d, sigmaColor, sigmaSpace, borderType)
+}

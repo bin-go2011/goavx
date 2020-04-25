@@ -226,7 +226,7 @@ func TestLaplacian(t *testing.T) {
 	WaitKey(0)
 }
 
-func TestResize(t *testing.T) {
+func TestResizeAndBilateralFilter(t *testing.T) {
 	srcColor, _ := Imread(SAMPLE_FILE)
 	defer srcColor.Release()
 
@@ -240,7 +240,22 @@ func TestResize(t *testing.T) {
 	defer smallImg.Release()
 
 	Resize(srcColor, smallImg, smallSize, 0, 0, INTER_LINEAR)
-	out := Imshow("resided picture", smallImg)
+
+	tmp, _ := NewMatFromSize(smallSize, CV_8UC3)
+	defer tmp.Release()
+
+	repetitions := 20
+
+	for i := 0; i < repetitions; i++ {
+		ksize := 9
+		sigmaColor := 9.0
+		sigmaSpace := 7.0
+
+		BilateralFilter(smallImg, tmp, ksize, sigmaColor, sigmaSpace, BORDER_DEFAULT)
+		BilateralFilter(tmp, smallImg, ksize, sigmaColor, sigmaSpace, BORDER_DEFAULT)
+
+	}
+	out := Imshow("resized picture", smallImg)
 	defer out.Destory()
 
 	WaitKey(0)

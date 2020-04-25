@@ -16,7 +16,8 @@ var (
 	cvMedianBlurProc,
 	cvLaplacianProc,
 	cvThresholdProc,
-	cvResizeProc *windows.Proc
+	cvResizeProc,
+	cvBilateralFilterProc *windows.Proc
 )
 
 func cvGaussianBlur(src *Mat, dst *Mat, ksizeX int, ksizeY int, sigmaX float64, sigmaY float64, borderType int) {
@@ -87,4 +88,13 @@ func cvResize(src *Mat, dst *Mat, size Size, fx float64, fy float64, interpolati
 
 	cvResizeProc.Call(uintptr(src.handle), uintptr(dst.handle),
 		uintptr(unsafe.Pointer(&size)), uintptr(math.Float64bits(fx)), uintptr(math.Float64bits(fy)), INTER_LINEAR)
+}
+
+func cvBilateralFilter(src *Mat, dst *Mat, d int, sigmaColor float64, sigmaSpace float64, borderType int) {
+	if cvBilateralFilterProc == nil {
+		cvBilateralFilterProc = goavx.LoadedDLL.MustFindProc("_cv_bilateral_filter")
+	}
+
+	cvBilateralFilterProc.Call(uintptr(src.handle), uintptr(dst.handle), uintptr(d),
+		uintptr(math.Float64bits(sigmaColor)), uintptr(math.Float64bits(sigmaSpace)), uintptr(borderType))
 }
